@@ -650,10 +650,59 @@
             color: var(--text-primary);
         }
 
+        /* Back button */
+        .back-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(61, 58, 54, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0 0 12px 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: white;
+            text-decoration: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 100px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.2s ease;
+        }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .back-btn svg { width: 14px; height: 14px; }
+        .back-bar-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
     </style>
 </head>
 <body>
     <div class="web-wrapper">
+        <div class="back-bar">
+            <a href="../" class="back-btn">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Todos los Playbooks
+            </a>
+            <span class="back-bar-label">Playbook Vol. 1</span>
+        </div>
 
     <!-- Header con Pixel a la IZQUIERDA saludando -->
     <header>
