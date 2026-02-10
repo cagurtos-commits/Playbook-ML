@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glosario de Analítica Avanzada | Playbook Analytics Vol. 0</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --bg-warm: #F8F5F0;
+            --bg-card: #FFFFFF;
+            --text-primary: #3D3A36;
+            --text-secondary: #4a4a5a;
+            --text-muted: #7a7a8a;
+            --accent-coral: #E85D4C;
+            --accent-coral-dark: #C94A3A;
+            --accent-coral-light: #FFF0EE;
+            --accent-teal: #2D9C9C;
+            --accent-teal-dark: #238080;
+            --accent-teal-light: #E8F6F6;
+            --accent-gold: #D4A853;
+            --accent-gold-dark: #C4983F;
+            --accent-gold-light: #FDF8EC;
+            --dark-warm: #3D3A36;
+            --border-light: #E8E4DD;
+            --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-primary);
+            width: 210mm;
+            margin: 0 auto;
+            padding: 24px;
+            line-height: 1.5;
+        }
+
+        /* ═══ HEADER ═══ */
+        header {
+            background: linear-gradient(150deg, #3D3A36 0%, #2a2a3e 55%, #3D3A36 100%);
+            border-radius: 20px;
+            padding: 22px 26px;
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -30px;
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, rgba(212,168,83,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-top {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 14px; position: relative; z-index: 1;
+        }
+        .area-logo { display: flex; align-items: center; gap: 8px; }
+        .area-logo svg { width: 28px; height: 28px; }
+        .logo-name { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9); display: block; }
+        .logo-tagline { font-size: 8px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px; display: block; }
+
+        .badge {
+            display: flex; align-items: center; gap: 5px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 4px 12px; border-radius: 100px;
+            font-size: 9px; font-weight: 600; color: var(--accent-gold);
+            text-transform: uppercase;
+        }
+        .badge-dot { width: 5px; height: 5px; background: var(--accent-gold); border-radius: 50%; }
+        .badge-vol { background: var(--accent-gold); color: #3D3A36; padding: 1px 6px; border-radius: 3px; font-size: 8px; font-weight: 700; }
+
+        .header-main {
+            display: flex; align-items: center; gap: 18px;
+            position: relative; z-index: 1;
+        }
+        .header-main svg { flex-shrink: 0; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.3)); }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px; font-weight: 700; line-height: 1.15;
+            color: white; margin-bottom: 5px;
+        }
+        h1 .hi { color: var(--accent-gold); }
+        .subtitle { font-size: 10.5px; color: rgba(255,255,255,0.5); line-height: 1.5; max-width: 380px; }
+
+        /* ═══ INTRO BAR ═══ */
+        .intro-bar {
+            background: var(--accent-gold-light);
+            border-left: 4px solid var(--accent-gold);
+            border-radius: 0 12px 12px 0;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .intro-bar p { font-size: 9.5px; color: var(--text-secondary); line-height: 1.55; }
+        .intro-bar strong { color: var(--accent-gold-dark); }
+
+        /* ═══ SECTION DIVIDERS ═══ */
+        .section-divider {
+            display: flex; align-items: center; gap: 10px;
+            margin: 12px 0 8px;
+        }
+        .section-divider-line { flex: 1; height: 1px; background: var(--border-light); }
+        .section-divider-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 8px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.2px;
+            padding: 3px 10px; border-radius: 100px;
+        }
+        .section-divider-label.coral { background: var(--accent-coral-light); color: var(--accent-coral); }
+        .section-divider-label.teal { background: var(--accent-teal-light); color: var(--accent-teal); }
+        .section-divider-label.gold { background: var(--accent-gold-light); color: var(--accent-gold); }
+        .section-divider-label.dark { background: var(--dark-warm); color: white; }
+
+        /* ═══ TERM CARDS ═══ */
+        .terms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+            margin-bottom: 2px;
+        }
+
+        .term {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 9px 11px;
+            border: 1px solid var(--border-light);
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .term-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 7px; font-weight: 700;
+            width: 18px; height: 18px;
+            border-radius: 5px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            color: white;
+            margin-top: 1px;
+        }
+        .term-num.coral { background: var(--accent-coral); }
+        .term-num.teal { background: var(--accent-teal); }
+        .term-num.gold { background: var(--accent-gold); }
+        .term-num.dark { background: var(--dark-warm); }
+
+        .term-body { flex: 1; min-width: 0; }
+
+        .term-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px; font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+
+        .term-def {
+            font-size: 8.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .term-def strong { color: var(--text-secondary); font-weight: 600; }
+
+        .term-analogy {
+            font-size: 7.5px;
+            color: var(--accent-gold-dark);
+            margin-top: 2px;
+            font-style: italic;
+            line-height: 1.3;
+        }
+
+        /* ═══ TAKEAWAY ═══ */
+        .takeaway {
+            background: linear-gradient(135deg, var(--dark-warm) 0%, #2a2a3e 100%);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-top: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .takeaway-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.55; }
+        .takeaway-text strong { color: var(--accent-gold); }
+
+        /* ═══ FOOTER ═══ */
+        footer {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 0; border-top: 1px solid var(--border-light);
+        }
+        .footer-logo { display: flex; align-items: center; gap: 8px; }
+        .footer-logo svg { width: 20px; height: 20px; }
+        .footer-name { font-family: 'Space Grotesk', sans-serif; font-size: 9px; font-weight: 700; color: var(--text-primary); display: block; }
+        .footer-tagline { font-size: 7px; color: var(--text-muted); display: block; }
+        .footer-tags { display: flex; gap: 5px; }
+        .footer-tag { font-size: 7px; background: var(--bg-warm); padding: 2px 8px; border-radius: 100px; color: var(--text-muted); border: 1px solid var(--border-light); }
+
+        /* ═══ WEB ═══ */
+        html { background: #f0ede8; }
+        .web-wrapper { max-width: 210mm; margin: 0 auto; padding: 32px 16px; }
+
+        @media (max-width: 800px) {
+            body { width: 100% !important; padding: 16px !important; }
+            .terms-grid { grid-template-columns: 1fr !important; }
+            h1 { font-size: 20px !important; }
+        }
+
+        ::selection { background: rgba(212, 168, 83, 0.2); }
+
+        .back-bar {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(61, 58, 54, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-radius: 0 0 12px 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: white; text-decoration: none;
+            font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+            padding: 6px 14px; border-radius: 100px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.2); }
+        .back-btn svg { width: 14px; height: 14px; }
+        .back-bar-label {
+            font-family: 'Space Grotesk', sans-serif; font-size: 10px;
+            color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.8px;
+        }
+
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .back-bar { display: none; }
+            .web-wrapper { padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="web-wrapper">
+        <div class="back-bar">
+            <a href="../" class="back-btn">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Todos los Playbooks
+            </a>
+            <span class="back-bar-label">Playbook Vol. 0</span>
+        </div>
+
+    <!-- ═══ HEADER ═══ -->
+    <header>
+        <div class="header-top">
+            <div class="area-logo">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#lg)"/>
+                    <circle cx="10" cy="12" r="2.5" fill="white"/><circle cx="10" cy="16" r="2.5" fill="white"/><circle cx="10" cy="20" r="2.5" fill="white"/>
+                    <circle cx="16" cy="14" r="2.5" fill="white" fill-opacity="0.7"/><circle cx="16" cy="18" r="2.5" fill="white" fill-opacity="0.7"/>
+                    <circle cx="22" cy="16" r="3" fill="#D4A853"/>
+                    <defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient></defs>
+                </svg>
+                <div><span class="logo-name">Advanced Analytics</span><span class="logo-tagline">Data Science & ML</span></div>
+            </div>
+            <div class="badge"><span class="badge-dot"></span>Playbook<span class="badge-vol">Vol. 0</span></div>
+        </div>
+        <div class="header-main">
+            <!-- Pixel Principal -->
+            <svg width="72" height="84" viewBox="0 0 130 140" fill="none">
+                <ellipse cx="30" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(10 30 95)"/>
+                <ellipse cx="32" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(10 32 94)"/>
+                <ellipse cx="100" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(-10 100 95)"/>
+                <ellipse cx="98" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(-10 98 94)"/>
+                <ellipse cx="65" cy="95" rx="38" ry="33" fill="url(#hB)"/>
+                <ellipse cx="65" cy="100" rx="26" ry="23" fill="#FFF0EE"/>
+                <circle cx="50" cy="88" r="5" fill="#E85D4C" fill-opacity="0.7"/><circle cx="65" cy="82" r="5" fill="#E85D4C" fill-opacity="0.7"/><circle cx="80" cy="88" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                <circle cx="55" cy="100" r="5" fill="#E85D4C" fill-opacity="0.5"/><circle cx="75" cy="100" r="5" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="65" cy="112" r="6" fill="#D4A853"/>
+                <line x1="50" y1="88" x2="65" y2="82" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.5"/><line x1="80" y1="88" x2="65" y2="82" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.5"/>
+                <line x1="50" y1="88" x2="55" y2="100" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.4"/><line x1="80" y1="88" x2="75" y2="100" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.4"/>
+                <line x1="55" y1="100" x2="65" y2="112" stroke="#D4A853" stroke-width="2" stroke-opacity="0.6"/><line x1="75" y1="100" x2="65" y2="112" stroke="#D4A853" stroke-width="2" stroke-opacity="0.6"/>
+                <ellipse cx="65" cy="50" rx="33" ry="28" fill="url(#hH)"/>
+                <path d="M37 35L32 17L47 30Z" fill="#C94A3A"/><path d="M93 35L98 17L83 30Z" fill="#C94A3A"/>
+                <circle cx="50" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/><circle cx="80" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+                <circle cx="52" cy="50" r="6" fill="#3D3A36"/><circle cx="82" cy="50" r="6" fill="#3D3A36"/>
+                <circle cx="54" cy="48" r="2" fill="white"/><circle cx="84" cy="48" r="2" fill="white"/>
+                <path d="M37 48C37 48 42 43 50 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/><path d="M93 48C93 48 88 43 80 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                <line x1="62" y1="48" x2="68" y2="48" stroke="#D4A853" stroke-width="3"/>
+                <path d="M65 60L61 69L65 67L69 69Z" fill="#D4A853"/>
+                <path d="M50 123L45 133M50 123L50 133M50 123L55 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                <path d="M80 123L75 133M80 123L80 133M80 123L85 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                <defs>
+                    <linearGradient id="hB" x1="27" y1="62" x2="103" y2="128"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+                    <linearGradient id="hH" x1="32" y1="22" x2="98" y2="78"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+                </defs>
+            </svg>
+            <div>
+                <h1>Glosario de <span class="hi">Analítica Avanzada</span></h1>
+                <p class="subtitle">Los términos que vas a encontrar en cada playbook, explicados sin jerga. Tu diccionario de bolsillo antes de cualquier proyecto de data.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ INTRO ═══ -->
+    <div class="intro-bar">
+        <!-- Pixel Pensativo mini -->
+        <svg width="32" height="38" viewBox="0 0 120 140" fill="none">
+            <ellipse cx="60" cy="95" rx="36" ry="31" fill="#E85D4C"/>
+            <ellipse cx="32" cy="70" rx="9" ry="16" fill="#C94A3A" transform="rotate(-30 32 70)"/><ellipse cx="35" cy="72" rx="6" ry="11" fill="#E85D4C" transform="rotate(-30 35 72)"/>
+            <ellipse cx="92" cy="88" rx="9" ry="15" fill="#C94A3A" transform="rotate(15 92 88)"/><ellipse cx="90" cy="86" rx="6" ry="11" fill="#E85D4C" transform="rotate(15 90 86)"/>
+            <ellipse cx="60" cy="100" rx="22" ry="19" fill="#FFF0EE"/>
+            <circle cx="50" cy="92" r="4" fill="#E85D4C" fill-opacity="0.5"/><circle cx="60" cy="87" r="4" fill="#E85D4C" fill-opacity="0.5"/><circle cx="70" cy="92" r="4" fill="#E85D4C" fill-opacity="0.5"/>
+            <circle cx="60" cy="106" r="5" fill="#D4A853"/>
+            <ellipse cx="60" cy="50" rx="32" ry="27" fill="#E85D4C"/>
+            <path d="M33 35L29 19L43 32Z" fill="#C94A3A"/><path d="M87 35L91 19L77 32Z" fill="#C94A3A"/>
+            <circle cx="46" cy="48" r="12" fill="white"/><circle cx="74" cy="48" r="12" fill="white"/>
+            <circle cx="48" cy="45" r="5" fill="#3D3A36"/><circle cx="76" cy="45" r="5" fill="#3D3A36"/>
+            <circle cx="49" cy="43" r="1.5" fill="white"/><circle cx="77" cy="43" r="1.5" fill="white"/>
+            <path d="M54 67C54 67 60 67 66 67" stroke="#D4A853" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M60 59L57 66L60 64L63 66Z" fill="#D4A853"/>
+            <text x="88" y="26" fill="#D4A853" font-size="14" font-weight="bold">?</text>
+        </svg>
+        <p><strong>Cuando leas un playbook y encuentres un término raro, vuelve aquí.</strong> Cada definición usa analogías de negocio para que puedas explicarle estos conceptos a cualquier colega sin sonar a paper académico.</p>
+    </div>
+
+
+    <!-- ════════════════════════════════
+         MÉTRICAS DE MODELO
+         ════════════════════════════════ -->
+    <div class="section-divider">
+        <span class="section-divider-line"></span>
+        <span class="section-divider-label coral">📏 Métricas de Modelo</span>
+        <span class="section-divider-line"></span>
+    </div>
+
+    <div class="terms-grid">
+        <div class="term">
+            <div class="term-num coral">01</div>
+            <div class="term-body">
+                <div class="term-name">Accuracy (Exactitud)</div>
+                <div class="term-def">% de predicciones correctas del total. <strong>Problema:</strong> si 95% de clientes NO hacen churn, un modelo que diga "nadie se va" tiene 95% accuracy pero es inútil.</div>
+                <div class="term-analogy">🏷️ Es como un arquero que tira 100 flechas: cuántas dan en algún blanco.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num coral">02</div>
+            <div class="term-body">
+                <div class="term-name">Precision vs Recall</div>
+                <div class="term-def"><strong>Precision:</strong> de los que marqué como churn, ¿cuántos realmente se fueron? <strong>Recall:</strong> de todos los que se fueron, ¿cuántos logré capturar?</div>
+                <div class="term-analogy">🏷️ Precision = no desperdiciar recursos. Recall = no perder clientes.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num coral">03</div>
+            <div class="term-body">
+                <div class="term-name">Falso Positivo / Falso Negativo</div>
+                <div class="term-def"><strong>FP:</strong> el modelo dice "se va" pero no se fue (alarma falsa). <strong>FN:</strong> dice "se queda" pero sí se fue (oportunidad perdida). El costo de cada error es diferente.</div>
+                <div class="term-analogy">🏷️ FP = mandar promo a quien no la necesita. FN = no hacer nada y perder al cliente.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num coral">04</div>
+            <div class="term-body">
+                <div class="term-name">Lift (Curva de Lift)</div>
+                <div class="term-def">Cuántas veces mejor es tu modelo vs seleccionar clientes al azar. Lift de 3x en el top 20% = con tu modelo capturas <strong>3 veces más</strong> casos que tirando dardos a ciegas.</div>
+                <div class="term-analogy">🏷️ Es la ventaja competitiva medible del modelo sobre "no hacer nada inteligente".</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num coral">05</div>
+            <div class="term-body">
+                <div class="term-name">Threshold (Umbral)</div>
+                <div class="term-def">El punto de corte que define cuándo actúas. Si el modelo dice 72% de probabilidad de churn, ¿es suficiente para intervenir? <strong>El umbral define esa línea</strong> y depende del negocio, no del modelo.</div>
+                <div class="term-analogy">🏷️ Es como definir a partir de qué temperatura consideras fiebre.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num coral">06</div>
+            <div class="term-body">
+                <div class="term-name">Score (Probabilidad)</div>
+                <div class="term-def">El número entre 0 y 1 que el modelo asigna a cada caso. <strong>No es certeza</strong> — es "qué tan probable es". Un score de 0.85 no significa que SÍ pasará, sino que hay alta probabilidad.</div>
+                <div class="term-analogy">🏷️ Es como el termómetro: te dice la temperatura, tú decides si sales con abrigo.</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ════════════════════════════════
+         CONCEPTOS DE MODELADO
+         ════════════════════════════════ -->
+    <div class="section-divider">
+        <span class="section-divider-line"></span>
+        <span class="section-divider-label teal">🧠 Conceptos de Modelado</span>
+        <span class="section-divider-line"></span>
+    </div>
+
+    <div class="terms-grid">
+        <div class="term">
+            <div class="term-num teal">07</div>
+            <div class="term-body">
+                <div class="term-name">Feature (Variable)</div>
+                <div class="term-def">Cada dato que el modelo usa para predecir: antigüedad, frecuencia de compra, ticket promedio. <strong>Más features ≠ mejor modelo.</strong> Lo clave es que sean relevantes y limpias.</div>
+                <div class="term-analogy">🏷️ Son los ingredientes de la receta: importa la calidad, no la cantidad.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num teal">08</div>
+            <div class="term-body">
+                <div class="term-name">Training vs Testing</div>
+                <div class="term-def">El modelo <strong>aprende</strong> con datos de training y se <strong>evalúa</strong> con datos de testing que nunca vio. Si no separas estos datos, no sabes si el modelo realmente aprendió o solo memorizó.</div>
+                <div class="term-analogy">🏷️ Estudiar con un examen y evaluarte con otro distinto.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num teal">09</div>
+            <div class="term-body">
+                <div class="term-name">Overfitting</div>
+                <div class="term-def">El modelo memoriza los datos históricos en vez de aprender patrones. <strong>Funciona perfecto en pruebas, falla en producción.</strong> Es el error más costoso y más frecuente en equipos con poca experiencia.</div>
+                <div class="term-analogy">🏷️ Estudiar las respuestas del examen pasado: en el nuevo, falla.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num teal">10</div>
+            <div class="term-body">
+                <div class="term-name">Supervisado vs No Supervisado</div>
+                <div class="term-def"><strong>Supervisado:</strong> le das ejemplos con respuesta ("este cliente SÍ hizo churn") y aprende el patrón. <strong>No supervisado:</strong> el modelo agrupa por similitud sin que le digas qué buscar.</div>
+                <div class="term-analogy">🏷️ Supervisado = maestro con examen corregido. No supervisado = "organiza estos papeles como veas".</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num teal">11</div>
+            <div class="term-body">
+                <div class="term-name">Clasificación vs Regresión</div>
+                <div class="term-def"><strong>Clasificación:</strong> predice una categoría ("¿se va o no?", "¿fraude o legítimo?"). <strong>Regresión:</strong> predice un número continuo ("¿cuánto va a gastar?", "¿en cuántos días?").</div>
+                <div class="term-analogy">🏷️ Clasificación = ¿sí o no? Regresión = ¿cuánto?</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num teal">12</div>
+            <div class="term-body">
+                <div class="term-name">Sesgo (Bias)</div>
+                <div class="term-def">Cuando el modelo tiene un <strong>error sistemático</strong> porque los datos de entrenamiento no representan la realidad. Si entrenas con data de Lima, no esperes que funcione igual en provincia.</div>
+                <div class="term-analogy">🏷️ Encuestar solo en Miraflores y decir que refleja a todo Lima.</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ════════════════════════════════
+         ESTADÍSTICA & EXPERIMENTACIÓN
+         ════════════════════════════════ -->
+    <div class="section-divider">
+        <span class="section-divider-line"></span>
+        <span class="section-divider-label gold">📐 Estadística & Experimentación</span>
+        <span class="section-divider-line"></span>
+    </div>
+
+    <div class="terms-grid">
+        <div class="term">
+            <div class="term-num gold">13</div>
+            <div class="term-body">
+                <div class="term-name">Correlación ≠ Causalidad</div>
+                <div class="term-def">Que dos cosas se muevan juntas <strong>no significa que una cause la otra.</strong> Las ventas de helado y los ahogamientos suben en verano, pero el helado no causa ahogamientos.</div>
+                <div class="term-analogy">🏷️ La variable oculta (verano/calor) es la que realmente explica ambas.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num gold">14</div>
+            <div class="term-body">
+                <div class="term-name">Grupo de Control vs Tratamiento</div>
+                <div class="term-def"><strong>Tratamiento:</strong> el grupo que recibe la acción (promo, nuevo diseño). <strong>Control:</strong> el grupo que NO la recibe. Sin control, no puedes medir el <strong>efecto real</strong> de tu intervención.</div>
+                <div class="term-analogy">🏷️ Es la razón por la que los medicamentos se prueban con placebo.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num gold">15</div>
+            <div class="term-body">
+                <div class="term-name">Significancia Estadística (p-value)</div>
+                <div class="term-def">¿El resultado que vi es real o fue suerte? Si p < 0.05, hay <strong>menos de 5% de probabilidad</strong> de que el efecto sea por azar. Pero ojo: significativo estadísticamente ≠ importante para el negocio.</div>
+                <div class="term-analogy">🏷️ Un aumento de 0.01% puede ser "significativo" pero no vale la inversión.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num gold">16</div>
+            <div class="term-body">
+                <div class="term-name">Incrementalidad</div>
+                <div class="term-def">El <strong>efecto neto</strong> de tu acción. Si 30% del grupo tratamiento compró pero 25% del control también habría comprado, tu incrementalidad real es solo 5%, no 30%.</div>
+                <div class="term-analogy">🏷️ ¿Cuánto de esa venta pasó GRACIAS a la promo vs. hubiera pasado igual?</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num gold">17</div>
+            <div class="term-body">
+                <div class="term-name">Outlier</div>
+                <div class="term-def">Un dato que se aleja mucho del patrón normal. <strong>Un cliente que transacciona 100x más que el promedio.</strong> Puede ser fraude, un error, o un super-usuario. No siempre hay que eliminarlo.</div>
+                <div class="term-analogy">🏷️ Es el que saca 100 en un salón donde todos sacan 60: distorsiona el promedio.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num gold">18</div>
+            <div class="term-body">
+                <div class="term-name">Mediana vs Promedio</div>
+                <div class="term-def">El <strong>promedio</strong> se distorsiona con outliers. La <strong>mediana</strong> (el valor del medio al ordenar) cuenta mejor la historia real. Si 9 personas ganan $1K y 1 gana $1M, el promedio dice $100K pero la mediana dice $1K.</div>
+                <div class="term-analogy">🏷️ Siempre pregunta: ¿me están dando promedio o mediana?</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ════════════════════════════════
+         OPERACIONES & PRODUCCIÓN
+         ════════════════════════════════ -->
+    <div class="section-divider">
+        <span class="section-divider-line"></span>
+        <span class="section-divider-label dark">⚙️ Operaciones & Producción</span>
+        <span class="section-divider-line"></span>
+    </div>
+
+    <div class="terms-grid">
+        <div class="term">
+            <div class="term-num dark">19</div>
+            <div class="term-body">
+                <div class="term-name">Pipeline / ETL</div>
+                <div class="term-def"><strong>Extract, Transform, Load.</strong> El proceso automatizado que toma datos crudos, los limpia y los deja listos para análisis. Si el pipeline falla, todo lo que viene después también falla.</div>
+                <div class="term-analogy">🏷️ Es la tubería: si se tapa, no llega agua limpia a ningún lado.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num dark">20</div>
+            <div class="term-body">
+                <div class="term-name">Batch vs Real-Time</div>
+                <div class="term-def"><strong>Batch:</strong> procesas datos acumulados cada cierto tiempo (diario, semanal). <strong>Real-time:</strong> procesas cada evento al instante. La mayoría de casos de negocio funcionan bien con batch.</div>
+                <div class="term-analogy">🏷️ Batch = lavar toda la ropa el domingo. Real-time = lavar cada prenda al quitártela.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num dark">21</div>
+            <div class="term-body">
+                <div class="term-name">Drift (Degradación del Modelo)</div>
+                <div class="term-def">Cuando el modelo pierde efectividad porque <strong>el mundo cambió</strong> desde que fue entrenado. Comportamientos post-pandemia, nueva competencia, cambios regulatorios. Todo modelo necesita monitoreo y reentrenamiento.</div>
+                <div class="term-analogy">🏷️ Un mapa de 2019 no te sirve si movieron las calles en 2024.</div>
+            </div>
+        </div>
+
+        <div class="term">
+            <div class="term-num dark">22</div>
+            <div class="term-body">
+                <div class="term-name">Segmentación</div>
+                <div class="term-def">Dividir clientes en <strong>grupos con comportamiento similar</strong> para tratarlos diferente. No todos los clientes valen igual ni responden igual. La personalización empieza por segmentar bien.</div>
+                <div class="term-analogy">🏷️ No le hablas igual a un cliente nuevo que a uno de 5 años.</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═══ TAKEAWAY ═══ -->
+    <div class="takeaway">
+        <!-- Pixel Eureka -->
+        <svg width="44" height="52" viewBox="0 0 130 150" fill="none">
+            <ellipse cx="65" cy="105" rx="32" ry="27" fill="#D4A853"/>
+            <ellipse cx="38" cy="100" rx="8" ry="14" fill="#C4983F" transform="rotate(-15 38 100)"/><ellipse cx="40" cy="98" rx="5" ry="10" fill="#D4A853" transform="rotate(-15 40 98)"/>
+            <ellipse cx="100" cy="78" rx="8" ry="16" fill="#C4983F" transform="rotate(50 100 78)"/><ellipse cx="97" cy="82" rx="5" ry="11" fill="#D4A853" transform="rotate(50 97 82)"/>
+            <ellipse cx="65" cy="110" rx="19" ry="16" fill="#FDF8EC"/>
+            <circle cx="55" cy="105" r="3" fill="#D4A853" fill-opacity="0.5"/><circle cx="65" cy="101" r="3" fill="#D4A853" fill-opacity="0.5"/><circle cx="75" cy="105" r="3" fill="#D4A853" fill-opacity="0.5"/>
+            <circle cx="65" cy="115" r="4" fill="#E85D4C"/>
+            <ellipse cx="65" cy="60" rx="28" ry="24" fill="#D4A853"/>
+            <path d="M42 45L38 32L52 43Z" fill="#C4983F"/><path d="M88 45L92 32L78 43Z" fill="#C4983F"/>
+            <circle cx="52" cy="58" r="10" fill="white"/><circle cx="78" cy="58" r="10" fill="white"/>
+            <circle cx="54" cy="60" r="5" fill="#D4A853"/><circle cx="80" cy="60" r="5" fill="#D4A853"/>
+            <circle cx="54" cy="60" r="2" fill="white"/><circle cx="80" cy="60" r="2" fill="white"/>
+            <path d="M55 74C55 74 65 84 75 74" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M65 67L62 74L65 72L68 74Z" fill="#C4983F"/>
+            <circle cx="65" cy="12" r="10" fill="white" fill-opacity="0.95"/>
+            <path d="M65 2V7M55 12H60M70 12H75M57 5L60 8M73 5L70 8" stroke="#D4A853" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div class="takeaway-text">
+            <strong>No necesitas memorizar estas definiciones.</strong> Necesitas saber que existen y dónde buscarlas. Cuando en una reunión alguien diga "el recall es bajo" o "necesitamos medir incrementalidad", vuelve aquí. Cada playbook profundizará estos conceptos con ejemplos reales de negocio.
+        </div>
+    </div>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer>
+        <div class="footer-logo">
+            <svg viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="8" fill="url(#fg)"/>
+                <circle cx="10" cy="12" r="2.5" fill="white"/><circle cx="10" cy="16" r="2.5" fill="white"/><circle cx="10" cy="20" r="2.5" fill="white"/>
+                <circle cx="16" cy="14" r="2.5" fill="white" fill-opacity="0.7"/><circle cx="16" cy="18" r="2.5" fill="white" fill-opacity="0.7"/>
+                <circle cx="22" cy="16" r="3" fill="#D4A853"/>
+                <defs><linearGradient id="fg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient></defs>
+            </svg>
+            <div><span class="footer-name">Advanced Analytics</span><span class="footer-tagline">Data Science & ML</span></div>
+        </div>
+        <div class="footer-tags">
+            <span class="footer-tag">Glosario</span>
+            <span class="footer-tag">22 Términos</span>
+            <span class="footer-tag">Playbook Vol. 0</span>
+        </div>
+    </footer>
+
+    </div>
+</body>
+</html>
