@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook Analytics | Advanced Analytics — Data Science & ML</title>
+    <meta name="description" content="Guías visuales de una página para alinear al negocio con Data Science y Machine Learning.">
+    <meta property="og:title" content="Playbook Analytics — Advanced Analytics">
+    <meta property="og:description" content="Guías visuales de una página para alinear al negocio con Data Science y Machine Learning.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --bg-warm: #F8F5F0;
+            --bg-card: #FFFFFF;
+            --text-primary: #3D3A36;
+            --text-secondary: #4a4a5a;
+            --text-muted: #7a7a8a;
+            --accent-coral: #E85D4C;
+            --accent-coral-light: #FFF0EE;
+            --accent-teal: #2D9C9C;
+            --accent-teal-light: #E8F6F6;
+            --accent-gold: #D4A853;
+            --accent-gold-light: #FDF8EC;
+            --dark-warm: #3D3A36;
+            --border-light: #E8E4DD;
+            --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.06);
+            --shadow-md: 0 4px 20px rgba(26, 26, 46, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f0ede8;
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .page {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 32px 20px 48px;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(150deg, var(--dark-warm) 0%, #2a2a3e 55%, #3D3A36 100%);
+            border-radius: 24px;
+            padding: 40px 44px 36px;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -40px;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(232,93,76,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -40px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(45,156,156,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-brand svg { width: 36px; height: 36px; }
+
+        .brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .brand-sub {
+            font-size: 10px;
+            color: rgba(255,255,255,0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .hero-count {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 16px;
+            border-radius: 100px;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-count strong {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .hero-main {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text { flex: 1; }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.15;
+            color: white;
+            margin-bottom: 14px;
+        }
+
+        .hero-title .hi { color: var(--accent-coral); }
+
+        .hero-desc {
+            font-size: 15px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.6;
+            max-width: 420px;
+        }
+
+        /* ── SECTION HEADER ── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border-light);
+        }
+
+        .section-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+        }
+
+        /* ── PLAYBOOK CARDS ── */
+        .playbook-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .playbook-card {
+            background: var(--bg-card);
+            border-radius: 18px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .playbook-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+            border-color: var(--accent-coral);
+        }
+
+        .playbook-card-inner {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .card-accent {
+            width: 6px;
+            flex-shrink: 0;
+        }
+
+        .card-accent.coral { background: var(--accent-coral); }
+        .card-accent.teal { background: var(--accent-teal); }
+        .card-accent.gold { background: var(--accent-gold); }
+
+        .card-body {
+            flex: 1;
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .card-content { flex: 1; }
+
+        .card-vol {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .card-vol .vol-num {
+            background: var(--accent-coral);
+            color: white;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 8px;
+            margin-left: 4px;
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .card-title .hi-coral { color: var(--accent-coral); }
+        .card-title .hi-teal { color: var(--accent-teal); }
+
+        .card-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .card-tag {
+            font-size: 9px;
+            padding: 3px 10px;
+            border-radius: 100px;
+            background: var(--bg-warm);
+            color: var(--text-muted);
+            border: 1px solid var(--border-light);
+        }
+
+        .card-arrow {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-warm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .playbook-card:hover .card-arrow {
+            background: var(--accent-coral);
+        }
+
+        .card-arrow svg { transition: all 0.3s ease; }
+
+        .playbook-card:hover .card-arrow svg path {
+            stroke: white;
+        }
+
+        /* ── COMING SOON ── */
+        .playbook-card.coming-soon {
+            opacity: 0.55;
+            pointer-events: none;
+        }
+
+        .playbook-card.coming-soon .card-title {
+            color: var(--text-muted);
+        }
+
+        .coming-badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--accent-gold-light);
+            color: var(--accent-gold);
+            padding: 3px 10px;
+            border-radius: 100px;
+            margin-left: 8px;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--accent-coral);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .page { padding: 16px 12px 32px; }
+            .hero { padding: 28px 24px 24px; }
+            .hero-title { font-size: 26px; }
+            .hero-main { flex-direction: column; text-align: center; }
+            .hero-desc { max-width: 100%; }
+            .card-body { flex-direction: column; text-align: center; }
+            .card-tags { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-top">
+                <div class="hero-brand">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="10" fill="url(#lGrad)"/>
+                        <circle cx="12" cy="15" r="3" fill="white"/>
+                        <circle cx="12" cy="20" r="3" fill="white"/>
+                        <circle cx="12" cy="25" r="3" fill="white"/>
+                        <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+                        <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+                        <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+                        <defs>
+                            <linearGradient id="lGrad" x1="0" y1="0" x2="40" y2="40">
+                                <stop stop-color="#E85D4C"/>
+                                <stop offset="1" stop-color="#C94A3A"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div>
+                        <div class="brand-name">Advanced Analytics</div>
+                        <div class="brand-sub">Data Science & ML</div>
+                    </div>
+                </div>
+                <div class="hero-count"><strong>1</strong> volumen publicado</div>
+            </div>
+
+            <div class="hero-main">
+                <!-- Pixel original con gafas y red neuronal -->
+                <svg width="100" height="116" viewBox="0 0 130 140" fill="none">
+                    <ellipse cx="30" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(10 30 95)"/>
+                    <ellipse cx="32" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(10 32 94)"/>
+                    <ellipse cx="100" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(-10 100 95)"/>
+                    <ellipse cx="98" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(-10 98 94)"/>
+                    <ellipse cx="65" cy="95" rx="38" ry="33" fill="url(#pBody)"/>
+                    <ellipse cx="65" cy="100" rx="26" ry="23" fill="#FFF0EE"/>
+                    <circle cx="50" cy="88" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="65" cy="82" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="80" cy="88" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="55" cy="100" r="5" fill="#E85D4C" fill-opacity="0.5"/>
+                    <circle cx="75" cy="100" r="5" fill="#E85D4C" fill-opacity="0.5"/>
+                    <circle cx="65" cy="112" r="6" fill="#D4A853"/>
+                    <line x1="50" y1="88" x2="65" y2="82" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.5"/>
+                    <line x1="80" y1="88" x2="65" y2="82" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.5"/>
+                    <line x1="50" y1="88" x2="55" y2="100" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.4"/>
+                    <line x1="80" y1="88" x2="75" y2="100" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.4"/>
+                    <line x1="55" y1="100" x2="65" y2="112" stroke="#D4A853" stroke-width="2" stroke-opacity="0.6"/>
+                    <line x1="75" y1="100" x2="65" y2="112" stroke="#D4A853" stroke-width="2" stroke-opacity="0.6"/>
+                    <ellipse cx="65" cy="50" rx="33" ry="28" fill="url(#pHead)"/>
+                    <path d="M37 35L32 17L47 30Z" fill="#C94A3A"/>
+                    <path d="M93 35L98 17L83 30Z" fill="#C94A3A"/>
+                    <circle cx="50" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+                    <circle cx="80" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+                    <circle cx="52" cy="50" r="6" fill="#3D3A36"/>
+                    <circle cx="82" cy="50" r="6" fill="#3D3A36"/>
+                    <circle cx="54" cy="48" r="2" fill="white"/>
+                    <circle cx="84" cy="48" r="2" fill="white"/>
+                    <path d="M37 48C37 48 42 43 50 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M93 48C93 48 88 43 80 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="62" y1="48" x2="68" y2="48" stroke="#D4A853" stroke-width="3"/>
+                    <path d="M65 60L61 69L65 67L69 69Z" fill="#D4A853"/>
+                    <path d="M50 123L45 133M50 123L50 133M50 123L55 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M80 123L75 133M80 123L80 133M80 123L85 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="pBody" x1="27" y1="62" x2="103" y2="128"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+                        <linearGradient id="pHead" x1="32" y1="22" x2="98" y2="78"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+                    </defs>
+                </svg>
+
+                <div class="hero-text">
+                    <h1 class="hero-title">Playbook<br><span class="hi">Analytics</span></h1>
+                    <p class="hero-desc">Guías visuales de una página para alinear al negocio con Data Science y Machine Learning. Cada volumen resuelve un problema real.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VOLUMES -->
+        <div class="section-header">
+            <span class="section-line"></span>
+            <span class="section-label">Volúmenes</span>
+            <span class="section-line"></span>
+        </div>
+
+        <div class="playbook-grid">
+            <!-- Vol 1 — ACTIVO -->
+            <a href="vol1/" class="playbook-card">
+                <div class="playbook-card-inner">
+                    <div class="card-accent coral"></div>
+                    <div class="card-body">
+                        <div class="card-content">
+                            <div class="card-vol">Playbook <span class="vol-num">Vol. 1</span></div>
+                            <div class="card-title">Qué <span class="hi-coral">sí</span> y qué <span class="hi-coral">no</span> esperar de un modelo de ML</div>
+                            <div class="card-desc">Alinear expectativas con el negocio antes de implementar Machine Learning evita frustraciones y maximiza el valor real.</div>
+                            <div class="card-tags">
+                                <span class="card-tag">Machine Learning</span>
+                                <span class="card-tag">Expectativas</span>
+                                <span class="card-tag">Churn</span>
+                            </div>
+                        </div>
+                        <div class="card-arrow">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M4 9h10M10 5l4 4-4 4" stroke="#3D3A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Vol 2 — PRÓXIMAMENTE -->
+            <div class="playbook-card coming-soon">
+                <div class="playbook-card-inner">
+                    <div class="card-accent teal"></div>
+                    <div class="card-body">
+                        <div class="card-content">
+                            <div class="card-vol">Playbook <span class="vol-num" style="background:var(--accent-teal)">Vol. 2</span></div>
+                            <div class="card-title">🎯 A/B Testing: errores comunes <span class="coming-badge">Próximamente</span></div>
+                            <div class="card-desc">Guía para evitar los errores más frecuentes al diseñar y evaluar experimentos A/B.</div>
+                            <div class="card-tags">
+                                <span class="card-tag">A/B Testing</span>
+                                <span class="card-tag">Experimentación</span>
+                            </div>
+                        </div>
+                        <div class="card-arrow">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M4 9h10M10 5l4 4-4 4" stroke="#3D3A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>Advanced Analytics — Data Science & ML</p>
+        </div>
+    </div>
+</body>
+</html>
