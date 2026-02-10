@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qué sí y qué no esperar de un modelo de ML | Playbook Analytics Vol.1</title>
+    <meta name="description" content="Alinear expectativas con el negocio antes de implementar Machine Learning evita frustraciones y maximiza el valor real.">
+    <meta property="og:title" content="Playbook Analytics Vol.1 — Qué sí y qué no esperar de un modelo de ML">
+    <meta property="og:description" content="Alinear expectativas con el negocio antes de implementar ML evita frustraciones y maximiza el valor real.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --bg-cream: #FDFBF7;
+            --bg-warm: #F8F5F0;
+            --bg-card: #FFFFFF;
+            --text-primary: #3D3A36;
+            --text-secondary: #4a4a5a;
+            --text-muted: #7a7a8a;
+            --accent-coral: #E85D4C;
+            --accent-coral-light: #FFF0EE;
+            --accent-teal: #2D9C9C;
+            --accent-teal-light: #E8F6F6;
+            --accent-gold: #D4A853;
+            --accent-gold-light: #FDF8EC;
+            --dark-warm: #3D3A36;
+            --border-light: #E8E4DD;
+            --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-primary);
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 24px;
+            line-height: 1.5;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -5%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(232, 93, 76, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-main {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-avatar {
+            flex-shrink: 0;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+        }
+
+        .header-text { flex: 1; position: relative; z-index: 1; }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .area-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .area-logo svg { width: 36px; height: 36px; }
+
+        .logo-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .logo-tagline {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-card);
+            padding: 5px 12px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent-coral);
+            box-shadow: var(--shadow-sm);
+            text-transform: uppercase;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-coral);
+            border-radius: 50%;
+        }
+
+        .badge-vol {
+            background: var(--accent-coral);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 8px;
+            font-weight: 700;
+            margin-left: 2px;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        h1 .highlight { color: var(--accent-coral); }
+
+        .subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            max-width: 400px;
+        }
+
+        .problem-section {
+            background: var(--accent-gold-light);
+            border-left: 4px solid var(--accent-gold);
+            border-radius: 0 12px 12px 0;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .problem-section .problem-content { flex: 1; }
+
+        .problem-section h2 {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .problem-section p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card-icon.yes { background: var(--accent-teal-light); }
+        .card-icon.no { background: var(--accent-coral-light); }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .card-title.yes { color: var(--accent-teal); }
+        .card-title.no { color: var(--accent-coral); }
+
+        .card-pixel { margin-left: auto; }
+
+        .expectation-list { list-style: none; }
+
+        .expectation-list li {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 10px;
+            line-height: 1.4;
+            align-items: flex-start;
+        }
+
+        .expectation-list li:last-child { margin-bottom: 0; }
+
+        .list-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .list-icon.yes { background: var(--accent-teal); color: white; }
+        .list-icon.no { background: var(--accent-coral); color: white; }
+
+        .list-text strong {
+            color: var(--text-primary);
+            display: block;
+            font-size: 10px;
+            margin-bottom: 1px;
+        }
+
+        .list-text span {
+            color: var(--text-muted);
+            font-size: 9px;
+        }
+
+        .example-section {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-light);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .example-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-coral-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .example-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-coral);
+            flex: 1;
+        }
+
+        .example-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .example-box {
+            background: var(--bg-warm);
+            border-radius: 10px;
+            padding: 14px 20px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .example-box.reality {
+            background: var(--accent-teal-light);
+            border: 2px solid var(--accent-teal);
+        }
+
+        .example-box .label {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .example-box.reality .label { color: var(--accent-teal); }
+
+        .example-box .value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .example-box.reality .value { color: var(--accent-teal); }
+
+        .example-box .desc {
+            font-size: 9px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .arrow-icon { font-size: 24px; color: var(--accent-coral); }
+
+        .example-insight {
+            background: var(--accent-gold-light);
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 10px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .example-insight span { font-size: 16px; }
+        .example-insight strong { color: var(--accent-gold); }
+
+        /* Cases Grid - Caso 1 vs Caso 2 */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .case-box {
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 10px;
+        }
+
+        .case-rules {
+            background: var(--bg-warm);
+            border: 1px dashed var(--accent-coral);
+        }
+
+        .case-ml {
+            background: var(--accent-teal-light);
+            border: 2px solid var(--accent-teal);
+        }
+
+        .case-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .case-number {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .case-rules .case-number {
+            background: var(--accent-coral);
+            color: white;
+        }
+
+        .case-ml .case-number {
+            background: var(--accent-teal);
+            color: white;
+        }
+
+        .case-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .case-rules .case-label { color: var(--accent-coral); }
+        .case-ml .case-label { color: var(--accent-teal); }
+
+        .case-rule {
+            background: white;
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .rule-icon { font-size: 14px; }
+
+        .case-problems, .case-benefits {
+            margin-bottom: 10px;
+        }
+
+        .problem-item, .benefit-item {
+            font-size: 9px;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+
+        .problem-item strong { color: var(--accent-coral); }
+        .benefit-item strong { color: var(--accent-teal); }
+
+        .case-result {
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .case-result.bad {
+            background: rgba(232, 93, 76, 0.1);
+        }
+
+        .case-result.good {
+            background: rgba(45, 156, 156, 0.15);
+        }
+
+        .result-label {
+            display: block;
+            font-size: 8px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .result-value {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .case-result.bad .result-value { color: var(--accent-coral); }
+        .case-result.good .result-value { color: var(--accent-teal); }
+
+        .result-desc {
+            display: block;
+            font-size: 8px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .error-section {
+            background: var(--accent-coral-light);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+
+        .error-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .error-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-coral);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .error-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-coral);
+            flex: 1;
+        }
+
+        .error-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .error-box {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 10px;
+        }
+
+        .error-box .label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .error-box.wrong { border: 1px dashed var(--accent-coral); }
+        .error-box.wrong .label { color: var(--accent-coral); }
+
+        .error-box.right { border: 1px solid var(--accent-teal); }
+        .error-box.right .label { color: var(--accent-teal); }
+
+        .error-box p { color: var(--text-secondary); line-height: 1.4; }
+
+        .takeaway {
+            background: linear-gradient(135deg, var(--dark-warm) 0%, #2a2a3e 100%);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .takeaway-text {
+            color: white;
+            font-size: 11px;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .takeaway-text strong { color: var(--accent-gold); }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-logo svg { width: 24px; height: 24px; }
+
+        .footer-logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .footer-logo-text span {
+            display: block;
+            font-size: 8px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .footer-tags { display: flex; gap: 6px; }
+
+        .footer-tag {
+            font-size: 9px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--bg-warm);
+            color: var(--text-muted);
+        }
+
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    
+
+        /* ── WEB WRAPPER ── */
+        html {
+            background: #f0ede8;
+        }
+
+        .web-wrapper {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                width: 100% !important;
+                padding: 16px !important;
+            }
+            .main-grid, .cases-grid, .error-content {
+                grid-template-columns: 1fr !important;
+            }
+            h1 { font-size: 22px !important; }
+            .web-wrapper { padding: 16px 8px; }
+        }
+
+        /* Smooth scroll and selection */
+        ::selection {
+            background: rgba(232, 93, 76, 0.2);
+            color: var(--text-primary);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="web-wrapper">
+
+    <!-- Header con Pixel a la IZQUIERDA saludando -->
+    <header>
+        <div class="header-main">
+            <!-- Avatar Pixel - LADO IZQUIERDO, alas en reposo (detrás del cuerpo) -->
+            <div class="header-avatar">
+                <svg width="95" height="110" viewBox="0 0 130 140" fill="none">
+                    <!-- Alita izquierda DETRÁS del cuerpo, un poco más arriba -->
+                    <ellipse cx="30" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(10 30 95)"/>
+                    <ellipse cx="32" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(10 32 94)"/>
+                    
+                    <!-- Alita derecha DETRÁS del cuerpo, un poco más arriba -->
+                    <ellipse cx="100" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(-10 100 95)"/>
+                    <ellipse cx="98" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(-10 98 94)"/>
+                    
+                    <!-- Cuerpo (encima de las alas) -->
+                    <ellipse cx="65" cy="95" rx="38" ry="33" fill="url(#hBody)"/>
+                    
+                    <!-- Pecho con red neuronal -->
+                    <ellipse cx="65" cy="100" rx="26" ry="23" fill="#FFF0EE"/>
+                    <circle cx="50" cy="88" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="65" cy="82" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="80" cy="88" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="55" cy="100" r="5" fill="#E85D4C" fill-opacity="0.5"/>
+                    <circle cx="75" cy="100" r="5" fill="#E85D4C" fill-opacity="0.5"/>
+                    <circle cx="65" cy="112" r="6" fill="#D4A853"/>
+                    <line x1="50" y1="88" x2="65" y2="82" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.5"/>
+                    <line x1="80" y1="88" x2="65" y2="82" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.5"/>
+                    <line x1="50" y1="88" x2="55" y2="100" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.4"/>
+                    <line x1="80" y1="88" x2="75" y2="100" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.4"/>
+                    <line x1="55" y1="100" x2="65" y2="112" stroke="#D4A853" stroke-width="2" stroke-opacity="0.6"/>
+                    <line x1="75" y1="100" x2="65" y2="112" stroke="#D4A853" stroke-width="2" stroke-opacity="0.6"/>
+                    
+                    <!-- Cabeza -->
+                    <ellipse cx="65" cy="50" rx="33" ry="28" fill="url(#hHead)"/>
+                    
+                    <!-- Orejas/Plumas -->
+                    <path d="M37 35L32 17L47 30Z" fill="#C94A3A"/>
+                    <path d="M93 35L98 17L83 30Z" fill="#C94A3A"/>
+                    
+                    <!-- Ojos -->
+                    <circle cx="50" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+                    <circle cx="80" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+                    <circle cx="52" cy="50" r="6" fill="#3D3A36"/>
+                    <circle cx="82" cy="50" r="6" fill="#3D3A36"/>
+                    <circle cx="54" cy="48" r="2" fill="white"/>
+                    <circle cx="84" cy="48" r="2" fill="white"/>
+                    
+                    <!-- Gafas doradas -->
+                    <path d="M37 48C37 48 42 43 50 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M93 48C93 48 88 43 80 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="62" y1="48" x2="68" y2="48" stroke="#D4A853" stroke-width="3"/>
+                    
+                    <!-- Pico -->
+                    <path d="M65 60L61 69L65 67L69 69Z" fill="#D4A853"/>
+                    
+                    <!-- Patas -->
+                    <path d="M50 123L45 133M50 123L50 133M50 123L55 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M80 123L75 133M80 123L80 133M80 123L85 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    
+                    <defs>
+                        <linearGradient id="hBody" x1="27" y1="62" x2="103" y2="128"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+                        <linearGradient id="hHead" x1="32" y1="22" x2="98" y2="78"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            
+            <div class="header-text">
+                <div class="header-top">
+                    <div class="area-logo">
+                        <svg viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="10" fill="url(#logoGrad)"/>
+                            <circle cx="12" cy="15" r="3" fill="white"/>
+                            <circle cx="12" cy="20" r="3" fill="white"/>
+                            <circle cx="12" cy="25" r="3" fill="white"/>
+                            <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+                            <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+                            <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+                            <defs>
+                                <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
+                                    <stop stop-color="#E85D4C"/>
+                                    <stop offset="1" stop-color="#C94A3A"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="area-logo-text">
+                            <span class="logo-name">Advanced Analytics</span>
+                            <span class="logo-tagline">Data Science & ML</span>
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        Playbook
+                        <span class="badge-vol">Vol. 1</span>
+                    </div>
+                </div>
+                <h1>
+                    Qué <span class="highlight">sí</span> y qué <span class="highlight">no</span> esperar<br>de un modelo de ML
+                </h1>
+                <p class="subtitle">Alinear expectativas con el negocio antes de implementar Machine Learning evita frustraciones y maximiza el valor real.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Problem Section con Pixel pensando -->
+    <div class="problem-section">
+        <!-- Pixel Pensando con alita en barbilla -->
+        <svg width="46" height="53" viewBox="0 0 120 140" fill="none">
+            <ellipse cx="60" cy="95" rx="36" ry="31" fill="#E85D4C"/>
+            <!-- Alita izquierda en barbilla pensando -->
+            <ellipse cx="32" cy="70" rx="9" ry="16" fill="#C94A3A" transform="rotate(-30 32 70)"/>
+            <ellipse cx="35" cy="72" rx="6" ry="11" fill="#E85D4C" transform="rotate(-30 35 72)"/>
+            <!-- Alita derecha abajo -->
+            <ellipse cx="92" cy="88" rx="9" ry="15" fill="#C94A3A" transform="rotate(15 92 88)"/>
+            <ellipse cx="90" cy="86" rx="6" ry="11" fill="#E85D4C" transform="rotate(15 90 86)"/>
+            <ellipse cx="60" cy="100" rx="22" ry="19" fill="#FFF0EE"/>
+            <circle cx="50" cy="92" r="4" fill="#E85D4C" fill-opacity="0.5"/>
+            <circle cx="60" cy="87" r="4" fill="#E85D4C" fill-opacity="0.5"/>
+            <circle cx="70" cy="92" r="4" fill="#E85D4C" fill-opacity="0.5"/>
+            <circle cx="60" cy="106" r="5" fill="#D4A853"/>
+            <ellipse cx="60" cy="50" rx="32" ry="27" fill="#E85D4C"/>
+            <path d="M33 35L29 19L43 32Z" fill="#C94A3A"/>
+            <path d="M87 35L91 19L77 32Z" fill="#C94A3A"/>
+            <circle cx="46" cy="48" r="12" fill="white"/>
+            <circle cx="74" cy="48" r="12" fill="white"/>
+            <!-- Ojos mirando arriba pensando -->
+            <circle cx="48" cy="45" r="5" fill="#3D3A36"/>
+            <circle cx="76" cy="45" r="5" fill="#3D3A36"/>
+            <circle cx="49" cy="43" r="1.5" fill="white"/>
+            <circle cx="77" cy="43" r="1.5" fill="white"/>
+            <!-- Boca pensativa -->
+            <path d="M54 67C54 67 60 67 66 67" stroke="#D4A853" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M60 59L57 66L60 64L63 66Z" fill="#D4A853"/>
+            <text x="88" y="26" fill="#D4A853" font-size="14" font-weight="bold">?</text>
+        </svg>
+        <div class="problem-content">
+            <h2>🎯 El problema que resuelve</h2>
+            <p>El negocio espera que el modelo "prediga el futuro exacto" o "reemplace decisiones humanas". Cuando el modelo falla una vez, pierde credibilidad aunque tenga 85% de accuracy. <strong>Este playbook alinea expectativas desde el día 1.</strong></p>
+        </div>
+    </div>
+
+    <!-- Main Grid: Sí vs No -->
+    <div class="main-grid">
+        <!-- Qué SÍ esperar -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon yes">
+                    <svg width="26" height="26" viewBox="0 0 50 50" fill="none">
+                        <ellipse cx="25" cy="30" rx="14" ry="12" fill="#2D9C9C"/>
+                        <ellipse cx="25" cy="20" rx="13" ry="11" fill="#2D9C9C"/>
+                        <circle cx="19" cy="18" r="4" fill="white"/>
+                        <circle cx="31" cy="18" r="4" fill="white"/>
+                        <circle cx="20" cy="19" r="2" fill="#3D3A36"/>
+                        <circle cx="32" cy="19" r="2" fill="#3D3A36"/>
+                        <path d="M20 26C20 26 25 30 30 26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="card-title yes">Qué SÍ esperar</div>
+                <!-- Pixel Feliz con pulgar arriba -->
+                <div class="card-pixel">
+                    <svg width="38" height="44" viewBox="0 0 130 140" fill="none">
+                        <ellipse cx="65" cy="95" rx="34" ry="29" fill="#2D9C9C"/>
+                        <!-- Alita izquierda abajo -->
+                        <ellipse cx="35" cy="88" rx="9" ry="15" fill="#238080" transform="rotate(-15 35 88)"/>
+                        <ellipse cx="37" cy="86" rx="6" ry="11" fill="#2D9C9C" transform="rotate(-15 37 86)"/>
+                        <!-- Alita derecha arriba (pulgar) -->
+                        <ellipse cx="102" cy="70" rx="9" ry="17" fill="#238080" transform="rotate(60 102 70)"/>
+                        <ellipse cx="100" cy="73" rx="6" ry="12" fill="#2D9C9C" transform="rotate(60 100 73)"/>
+                        <ellipse cx="65" cy="100" rx="21" ry="18" fill="#E8F6F6"/>
+                        <circle cx="55" cy="94" r="3" fill="#2D9C9C" fill-opacity="0.5"/>
+                        <circle cx="65" cy="90" r="3" fill="#2D9C9C" fill-opacity="0.5"/>
+                        <circle cx="75" cy="94" r="3" fill="#2D9C9C" fill-opacity="0.5"/>
+                        <circle cx="65" cy="106" r="4" fill="#D4A853"/>
+                        <ellipse cx="65" cy="50" rx="30" ry="25" fill="#2D9C9C"/>
+                        <path d="M40 35L36 21L50 33Z" fill="#238080"/>
+                        <path d="M90 35L94 21L80 33Z" fill="#238080"/>
+                        <circle cx="50" cy="48" r="11" fill="white"/>
+                        <circle cx="80" cy="48" r="11" fill="white"/>
+                        <circle cx="52" cy="50" r="5" fill="#3D3A36"/>
+                        <circle cx="82" cy="50" r="5" fill="#3D3A36"/>
+                        <circle cx="53" cy="48" r="1.5" fill="white"/>
+                        <circle cx="83" cy="48" r="1.5" fill="white"/>
+                        <path d="M55 64C55 64 65 72 75 64" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M65 57L62 64L65 62L68 64Z" fill="#D4A853"/>
+                    </svg>
+                </div>
+            </div>
+            <ul class="expectation-list">
+                <li><div class="list-icon yes">✓</div><div class="list-text"><strong>Probabilidades, no certezas</strong><span>"70% de probabilidad de churn" no es "va a hacer churn"</span></div></li>
+                <li><div class="list-icon yes">✓</div><div class="list-text"><strong>Patrones en datos históricos</strong><span>El modelo aprende de lo que ya pasó, no inventa</span></div></li>
+                <li><div class="list-icon yes">✓</div><div class="list-text"><strong>Escala y consistencia</strong><span>Procesar 100K clientes con la misma lógica, sin fatiga</span></div></li>
+                <li><div class="list-icon yes">✓</div><div class="list-text"><strong>Mejora continua con feedback</strong><span>Reentrenar con datos nuevos mejora el modelo</span></div></li>
+                <li><div class="list-icon yes">✓</div><div class="list-text"><strong>Priorización inteligente</strong><span>Ordenar clientes por riesgo/oportunidad para focalizar esfuerzo</span></div></li>
+            </ul>
+        </div>
+
+        <!-- Qué NO esperar -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon no">
+                    <svg width="26" height="26" viewBox="0 0 50 50" fill="none">
+                        <ellipse cx="25" cy="30" rx="14" ry="12" fill="#E85D4C"/>
+                        <ellipse cx="25" cy="20" rx="13" ry="11" fill="#E85D4C"/>
+                        <circle cx="19" cy="18" r="4" fill="white"/>
+                        <circle cx="31" cy="18" r="4" fill="white"/>
+                        <circle cx="20" cy="19" r="2" fill="#3D3A36"/>
+                        <circle cx="32" cy="19" r="2" fill="#3D3A36"/>
+                        <path d="M20 28C20 28 25 24 30 28" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="card-title no">Qué NO esperar</div>
+                <!-- Pixel Preocupado con alitas cruzadas - CEJAS CORREGIDAS -->
+                <div class="card-pixel">
+                    <svg width="38" height="44" viewBox="0 0 130 140" fill="none">
+                        <ellipse cx="65" cy="95" rx="34" ry="29" fill="#E85D4C"/>
+                        <!-- Alitas cruzadas -->
+                        <ellipse cx="50" cy="82" rx="9" ry="15" fill="#C94A3A" transform="rotate(25 50 82)"/>
+                        <ellipse cx="52" cy="84" rx="6" ry="11" fill="#E85D4C" transform="rotate(25 52 84)"/>
+                        <ellipse cx="80" cy="82" rx="9" ry="15" fill="#C94A3A" transform="rotate(-25 80 82)"/>
+                        <ellipse cx="78" cy="84" rx="6" ry="11" fill="#E85D4C" transform="rotate(-25 78 84)"/>
+                        <ellipse cx="65" cy="100" rx="21" ry="18" fill="#FFF0EE"/>
+                        <circle cx="55" cy="94" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                        <circle cx="65" cy="90" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                        <circle cx="75" cy="94" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                        <circle cx="65" cy="106" r="4" fill="#D4A853"/>
+                        <ellipse cx="65" cy="50" rx="30" ry="25" fill="#E85D4C"/>
+                        <path d="M40 35L36 21L50 33Z" fill="#C94A3A"/>
+                        <path d="M90 35L94 21L80 33Z" fill="#C94A3A"/>
+                        <circle cx="50" cy="48" r="11" fill="white"/>
+                        <circle cx="80" cy="48" r="11" fill="white"/>
+                        <circle cx="52" cy="50" r="5" fill="#3D3A36"/>
+                        <circle cx="82" cy="50" r="5" fill="#3D3A36"/>
+                        <circle cx="53" cy="48" r="1.5" fill="white"/>
+                        <circle cx="83" cy="48" r="1.5" fill="white"/>
+                        <!-- CEJAS CORREGIDAS - curvas suaves -->
+                        <path d="M40 40C44 38 50 38 56 42" stroke="#C94A3A" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M90 40C86 38 80 38 74 42" stroke="#C94A3A" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M55 68C55 68 65 62 75 68" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M65 57L62 64L65 62L68 64Z" fill="#D4A853"/>
+                    </svg>
+                </div>
+            </div>
+            <ul class="expectation-list">
+                <li><div class="list-icon no">✗</div><div class="list-text"><strong>100% de precisión</strong><span>Ningún modelo es perfecto. 85% accuracy = 15% de errores</span></div></li>
+                <li><div class="list-icon no">✗</div><div class="list-text"><strong>Predicciones sin datos de calidad</strong><span>"Garbage in, garbage out" — el modelo no inventa datos</span></div></li>
+                <li><div class="list-icon no">✗</div><div class="list-text"><strong>Explicaciones causales</strong><span>Correlación ≠ causalidad. El modelo no dice "por qué"</span></div></li>
+                <li><div class="list-icon no">✗</div><div class="list-text"><strong>Adaptación automática a cambios</strong><span>COVID, nuevos productos, cambios de mercado = reentrenar</span></div></li>
+                <li><div class="list-icon no">✗</div><div class="list-text"><strong>Reemplazo del criterio humano</strong><span>El modelo asiste la decisión, no la toma solo</span></div></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Example Section - CASO 1 vs CASO 2 -->
+    <div class="example-section">
+        <div class="example-header">
+            <div class="example-icon">📊</div>
+            <div class="example-title">Ejemplo: Detección de Fuga en Canal Tradicional</div>
+            <!-- Pixel señalando -->
+            <svg width="36" height="42" viewBox="0 0 130 140" fill="none">
+                <ellipse cx="60" cy="95" rx="32" ry="27" fill="#E85D4C"/>
+                <ellipse cx="32" cy="86" rx="8" ry="14" fill="#C94A3A" transform="rotate(-15 32 86)"/>
+                <ellipse cx="34" cy="84" rx="5" ry="10" fill="#E85D4C" transform="rotate(-15 34 84)"/>
+                <ellipse cx="100" cy="72" rx="8" ry="16" fill="#C94A3A" transform="rotate(70 100 72)"/>
+                <ellipse cx="98" cy="75" rx="5" ry="11" fill="#E85D4C" transform="rotate(70 98 75)"/>
+                <ellipse cx="60" cy="100" rx="19" ry="16" fill="#FFF0EE"/>
+                <circle cx="52" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="60" cy="91" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="68" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="60" cy="105" r="4" fill="#D4A853"/>
+                <ellipse cx="60" cy="50" rx="28" ry="24" fill="#E85D4C"/>
+                <path d="M37 35L33 22L46 33Z" fill="#C94A3A"/>
+                <path d="M83 35L87 22L74 33Z" fill="#C94A3A"/>
+                <circle cx="47" cy="48" r="10" fill="white"/>
+                <circle cx="73" cy="48" r="10" fill="white"/>
+                <circle cx="50" cy="50" r="4" fill="#3D3A36"/>
+                <circle cx="76" cy="50" r="4" fill="#3D3A36"/>
+                <circle cx="51" cy="48" r="1.5" fill="white"/>
+                <circle cx="77" cy="48" r="1.5" fill="white"/>
+                <path d="M53 64C53 64 60 67 67 64" stroke="#D4A853" stroke-width="2" stroke-linecap="round"/>
+                <path d="M60 57L57 63L60 61L63 63Z" fill="#D4A853"/>
+            </svg>
+        </div>
+        
+        <!-- Dos casos lado a lado -->
+        <div class="cases-grid">
+            <!-- Caso 1: Solo reglas -->
+            <div class="case-box case-rules">
+                <div class="case-header">
+                    <span class="case-number">Caso 1</span>
+                    <span class="case-label">Solo reglas descriptivas</span>
+                </div>
+                <div class="case-rule">
+                    <span class="rule-icon">📋</span>
+                    <span>"Si no compra en 60 días → En riesgo"</span>
+                </div>
+                <div class="case-problems">
+                    <div class="problem-item">⏰ <strong>Reactivo:</strong> cuando lo detectas, ya se fue</div>
+                    <div class="problem-item">👥 <strong>Genérico:</strong> trata igual a todos los clientes</div>
+                    <div class="problem-item">📉 <strong>Tardío:</strong> no captura señales tempranas</div>
+                </div>
+                <div class="case-result bad">
+                    <span class="result-label">Resultado típico</span>
+                    <span class="result-value">~15% rescate</span>
+                    <span class="result-desc">La mayoría ya decidió irse</span>
+                </div>
+            </div>
+            
+            <!-- Caso 2: Modelo ML -->
+            <div class="case-box case-ml">
+                <div class="case-header">
+                    <span class="case-number">Caso 2</span>
+                    <span class="case-label">Modelo predictivo ML</span>
+                </div>
+                <div class="case-rule">
+                    <span class="rule-icon">🧠</span>
+                    <span>Detecta patrones 30-60 días ANTES</span>
+                </div>
+                <div class="case-benefits">
+                    <div class="benefit-item">🔮 <strong>Predictivo:</strong> señales tempranas de riesgo</div>
+                    <div class="benefit-item">🎯 <strong>Personalizado:</strong> probabilidad individual</div>
+                    <div class="benefit-item">📊 <strong>Multivariable:</strong> frecuencia + ticket + mix</div>
+                </div>
+                <div class="case-result good">
+                    <span class="result-label">Resultado típico</span>
+                    <span class="result-value">~35% rescate</span>
+                    <span class="result-desc">Actúas cuando aún puedes influir</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example-insight">
+            <span>💡</span>
+            <p><strong>La diferencia clave:</strong> Las reglas te dicen <em>"quién YA se fue"</em>. El modelo te dice <em>"quién ESTÁ POR irse"</em> — y eso cambia todo porque <strong>puedes actuar antes</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Error Section -->
+    <div class="error-section">
+        <div class="error-header">
+            <div class="error-icon">⚠️</div>
+            <div class="error-title">Error común #1: Juzgar por casos individuales</div>
+            <!-- Pixel Confundido con alitas arriba -->
+            <svg width="38" height="44" viewBox="0 0 130 140" fill="none">
+                <ellipse cx="65" cy="95" rx="32" ry="27" fill="#E85D4C"/>
+                <!-- Alitas levantadas confundido -->
+                <ellipse cx="32" cy="72" rx="8" ry="14" fill="#C94A3A" transform="rotate(-40 32 72)"/>
+                <ellipse cx="35" cy="75" rx="5" ry="10" fill="#E85D4C" transform="rotate(-40 35 75)"/>
+                <ellipse cx="98" cy="72" rx="8" ry="14" fill="#C94A3A" transform="rotate(40 98 72)"/>
+                <ellipse cx="95" cy="75" rx="5" ry="10" fill="#E85D4C" transform="rotate(40 95 75)"/>
+                <ellipse cx="65" cy="100" rx="19" ry="16" fill="#FFF0EE"/>
+                <circle cx="55" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="65" cy="91" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="75" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="65" cy="105" r="4" fill="#D4A853"/>
+                <ellipse cx="65" cy="50" rx="28" ry="24" fill="#E85D4C"/>
+                <path d="M40 35L36 22L50 33Z" fill="#C94A3A"/>
+                <path d="M90 35L94 22L80 33Z" fill="#C94A3A"/>
+                <circle cx="50" cy="48" r="10" fill="white"/>
+                <circle cx="80" cy="48" r="10" fill="white"/>
+                <!-- Ojos confundidos -->
+                <circle cx="52" cy="46" r="4" fill="#3D3A36"/>
+                <circle cx="82" cy="52" r="4" fill="#3D3A36"/>
+                <circle cx="53" cy="44" r="1.5" fill="white"/>
+                <circle cx="83" cy="50" r="1.5" fill="white"/>
+                <path d="M55 67C58 64 72 67 75 64" stroke="#D4A853" stroke-width="2" stroke-linecap="round"/>
+                <path d="M65 57L62 64L65 62L68 64Z" fill="#D4A853"/>
+                <text x="95" y="30" fill="white" font-size="11" font-weight="bold">?</text>
+                <text x="25" y="35" fill="white" font-size="9" font-weight="bold">!</text>
+            </svg>
+        </div>
+        <div class="error-content">
+            <div class="error-box wrong">
+                <div class="label">❌ Lo que dicen</div>
+                <p>"El modelo dijo que Juan haría churn y no se fue. <strong>El modelo no sirve.</strong>"</p>
+            </div>
+            <div class="error-box right">
+                <div class="label">✓ La realidad</div>
+                <p>Si el modelo tiene 80% recall, de cada 10 churners reales captura 8. <strong>Los 2 que fallan no invalidan los 8 aciertos.</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Takeaway -->
+    <div class="takeaway">
+        <!-- Pixel Eureka dorado con foco -->
+        <svg width="50" height="58" viewBox="0 0 130 150" fill="none">
+            <ellipse cx="65" cy="105" rx="32" ry="27" fill="#D4A853"/>
+            <!-- Alita izquierda normal -->
+            <ellipse cx="38" cy="100" rx="8" ry="14" fill="#C4983F" transform="rotate(-15 38 100)"/>
+            <ellipse cx="40" cy="98" rx="5" ry="10" fill="#D4A853" transform="rotate(-15 40 98)"/>
+            <!-- Alita derecha señalando arriba al foco -->
+            <ellipse cx="100" cy="78" rx="8" ry="16" fill="#C4983F" transform="rotate(50 100 78)"/>
+            <ellipse cx="97" cy="82" rx="5" ry="11" fill="#D4A853" transform="rotate(50 97 82)"/>
+            <ellipse cx="65" cy="110" rx="19" ry="16" fill="#FDF8EC"/>
+            <circle cx="55" cy="105" r="3" fill="#D4A853" fill-opacity="0.5"/>
+            <circle cx="65" cy="101" r="3" fill="#D4A853" fill-opacity="0.5"/>
+            <circle cx="75" cy="105" r="3" fill="#D4A853" fill-opacity="0.5"/>
+            <circle cx="65" cy="115" r="4" fill="#E85D4C"/>
+            <ellipse cx="65" cy="60" rx="28" ry="24" fill="#D4A853"/>
+            <path d="M42 45L38 32L52 43Z" fill="#C4983F"/>
+            <path d="M88 45L92 32L78 43Z" fill="#C4983F"/>
+            <circle cx="52" cy="58" r="10" fill="white"/>
+            <circle cx="78" cy="58" r="10" fill="white"/>
+            <!-- Ojos brillantes -->
+            <circle cx="54" cy="60" r="5" fill="#D4A853"/>
+            <circle cx="80" cy="60" r="5" fill="#D4A853"/>
+            <circle cx="54" cy="60" r="2" fill="white"/>
+            <circle cx="80" cy="60" r="2" fill="white"/>
+            <!-- Sonrisa grande -->
+            <path d="M55 74C55 74 65 84 75 74" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M65 67L62 74L65 72L68 74Z" fill="#C4983F"/>
+            <!-- Foco de idea -->
+            <circle cx="65" cy="12" r="10" fill="white" fill-opacity="0.95"/>
+            <path d="M65 2V7M55 12H60M70 12H75M57 5L60 8M73 5L70 8" stroke="#D4A853" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div class="takeaway-text">
+            <strong>Takeaway:</strong> Un modelo de ML es como un GPS — te da la mejor ruta basada en datos históricos, pero tú decides si la sigues. Si hay un accidente nuevo (evento no visto), el GPS no lo sabe hasta que actualices el mapa.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            <svg viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="8" fill="url(#fGrad)"/>
+                <circle cx="10" cy="12" r="2.5" fill="white"/>
+                <circle cx="10" cy="16" r="2.5" fill="white"/>
+                <circle cx="10" cy="20" r="2.5" fill="white"/>
+                <circle cx="16" cy="14" r="2.5" fill="white" fill-opacity="0.7"/>
+                <circle cx="16" cy="18" r="2.5" fill="white" fill-opacity="0.7"/>
+                <circle cx="22" cy="16" r="3" fill="#D4A853"/>
+                <defs>
+                    <linearGradient id="fGrad" x1="0" y1="0" x2="32" y2="32">
+                        <stop stop-color="#E85D4C"/>
+                        <stop offset="1" stop-color="#C94A3A"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="footer-logo-text">
+                Advanced Analytics
+                <span>Data Science & ML</span>
+            </div>
+        </div>
+        <div class="footer-tags">
+            <span class="footer-tag">Machine Learning</span>
+            <span class="footer-tag">Playbook Vol. 1</span>
+        </div>
+    </footer>
+
+    </div>
+</body>
+</html>
