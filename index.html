@@ -320,6 +320,176 @@
             margin-left: 8px;
         }
 
+        /* ── READINGS SECTION ── */
+        .readings-section {
+            margin-bottom: 32px;
+        }
+
+        .readings-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .reading-category {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .category-header:hover { background: var(--bg-warm); }
+
+        .category-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; flex-shrink: 0;
+        }
+
+        .category-info { flex: 1; }
+
+        .category-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px; font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .category-count {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .category-chevron {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: var(--bg-warm);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .category-chevron svg {
+            transition: transform 0.3s ease;
+        }
+
+        .reading-category.open .category-chevron svg {
+            transform: rotate(180deg);
+        }
+
+        .reading-category.open .category-chevron {
+            background: var(--dark-warm);
+        }
+
+        .reading-category.open .category-chevron svg path {
+            stroke: white;
+        }
+
+        .category-links {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .reading-category.open .category-links {
+            max-height: 600px;
+        }
+
+        .category-links-inner {
+            padding: 0 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .reading-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            text-decoration: none;
+            color: inherit;
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.2s;
+        }
+
+        .reading-link:last-child { border-bottom: none; }
+
+        .reading-link:hover {
+            padding-left: 6px;
+        }
+
+        .link-bullet {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+
+        .reading-link:hover .link-bullet {
+            transform: scale(1.4);
+        }
+
+        .link-info { flex: 1; min-width: 0; }
+
+        .link-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px; font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .reading-link:hover .link-title {
+            color: var(--accent-coral);
+        }
+
+        .link-source {
+            font-size: 9px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-top: 1px;
+        }
+
+        .link-tags {
+            display: flex; gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .link-tag {
+            font-size: 7px; font-weight: 600;
+            padding: 2px 7px; border-radius: 100px;
+            background: var(--bg-warm);
+            color: var(--text-muted);
+            border: 1px solid var(--border-light);
+        }
+
+        .link-external {
+            flex-shrink: 0;
+            opacity: 0.3;
+            transition: opacity 0.2s;
+        }
+
+        .reading-link:hover .link-external { opacity: 0.7; }
+
+        @media (max-width: 640px) {
+            .category-header { padding: 14px 16px; }
+            .category-links-inner { padding: 0 16px 14px; }
+            .link-tags { display: none; }
+        }
+
         /* ── FOOTER ── */
         .footer {
             text-align: center;
@@ -506,6 +676,100 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- LECTURAS ADICIONALES -->
+        <div class="readings-section">
+            <div class="section-header">
+                <span class="section-line"></span>
+                <span class="section-label">📚 Lecturas Adicionales</span>
+                <span class="section-line"></span>
+            </div>
+
+            <div class="readings-categories">
+
+                <!-- ── NIVEL INICIAL ── -->
+                <div class="reading-category open">
+                    <div class="category-header" onclick="this.parentElement.classList.toggle('open')">
+                        <div class="category-icon" style="background:var(--accent-gold-light)">🗺️</div>
+                        <div class="category-info">
+                            <div class="category-name">El Mapa — Para Navegantes</div>
+                            <div class="category-count">Entiende el panorama sin necesidad de código</div>
+                        </div>
+                        <div class="category-chevron">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="#3D3A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                    </div>
+                    <div class="category-links">
+                        <div class="category-links-inner">
+                            <a href="https://www.ibm.com/think/news/ai-tech-trends-predictions-2026" target="_blank" class="reading-link">
+                                <div class="link-bullet" style="background:var(--accent-gold)"></div>
+                                <div class="link-info">
+                                    <div class="link-title">AI & Tech Trends: Predictions for 2026</div>
+                                    <div class="link-source">IBM Think — Hacia dónde va la IA este año y qué significa para tu negocio</div>
+                                </div>
+                                <div class="link-tags"><span class="link-tag">Tendencias</span></div>
+                                <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                            <a href="https://hbr.org/2022/12/why-youre-not-getting-value-from-your-data-science" target="_blank" class="reading-link">
+                                <div class="link-bullet" style="background:var(--accent-gold)"></div>
+                                <div class="link-info">
+                                    <div class="link-title">Why You're Not Getting Value from Data Science</div>
+                                    <div class="link-source">Harvard Business Review — Por qué muchos proyectos de DS no generan impacto real</div>
+                                </div>
+                                <div class="link-tags"><span class="link-tag">Vol. 1</span></div>
+                                <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                            <a href="https://developers.google.com/machine-learning/guides/rules-of-ml" target="_blank" class="reading-link">
+                                <div class="link-bullet" style="background:var(--accent-gold)"></div>
+                                <div class="link-info">
+                                    <div class="link-title">Rules of Machine Learning: Best Practices</div>
+                                    <div class="link-source">Google — 43 reglas de qué esperar (y qué no) al implementar ML</div>
+                                </div>
+                                <div class="link-tags"><span class="link-tag">Vol. 1</span></div>
+                                <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── NIVEL AVANZADO ── -->
+                <div class="reading-category">
+                    <div class="category-header" onclick="this.parentElement.classList.toggle('open')">
+                        <div class="category-icon" style="background:var(--accent-coral-light)">🔬</div>
+                        <div class="category-info">
+                            <div class="category-name">El Laboratorio — Para Builders</div>
+                            <div class="category-count">Arquitecturas, papers y deep dives técnicos</div>
+                        </div>
+                        <div class="category-chevron">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="#3D3A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                    </div>
+                    <div class="category-links">
+                        <div class="category-links-inner">
+                            <a href="https://pub.towardsai.net/rag-architectures-every-ai-developer-must-know-a-complete-guide-f3524ee68b9c" target="_blank" class="reading-link">
+                                <div class="link-bullet" style="background:var(--accent-coral)"></div>
+                                <div class="link-info">
+                                    <div class="link-title">RAG Architectures Every AI Developer Must Know</div>
+                                    <div class="link-source">Towards AI — Guía completa de arquitecturas RAG: naive, advanced, modular y agentic</div>
+                                </div>
+                                <div class="link-tags"><span class="link-tag">RAG</span><span class="link-tag">Arquitectura</span></div>
+                                <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                            <a href="https://christophm.github.io/interpretable-ml-book/" target="_blank" class="reading-link">
+                                <div class="link-bullet" style="background:var(--accent-coral)"></div>
+                                <div class="link-info">
+                                    <div class="link-title">Interpretable Machine Learning (libro gratuito)</div>
+                                    <div class="link-source">Christoph Molnar — SHAP, LIME, PDP y métricas de modelo a fondo</div>
+                                </div>
+                                <div class="link-tags"><span class="link-tag">Vol. 0</span></div>
+                                <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
