@@ -50,7 +50,7 @@
         .hero {
             background: linear-gradient(150deg, var(--dark-warm) 0%, #2a2a3e 55%, #3D3A36 100%);
             border-radius: 24px;
-            padding: 40px 44px 36px;
+            padding: 28px 36px 26px;
             margin-bottom: 28px;
             position: relative;
             overflow: hidden;
@@ -82,7 +82,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 28px;
+            margin-bottom: 18px;
             position: relative;
             z-index: 1;
         }
@@ -127,7 +127,7 @@
         .hero-main {
             display: flex;
             align-items: center;
-            gap: 32px;
+            gap: 24px;
             position: relative;
             z-index: 1;
         }
@@ -136,17 +136,17 @@
 
         .hero-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 700;
             line-height: 1.15;
             color: white;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
         .hero-title .hi { color: var(--accent-coral); }
 
         .hero-desc {
-            font-size: 15px;
+            font-size: 13px;
             color: rgba(255,255,255,0.55);
             line-height: 1.6;
             max-width: 420px;
@@ -320,6 +320,25 @@
             margin-left: 8px;
         }
 
+        .new-badge {
+            display: inline-block;
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--accent-teal);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 100px;
+            margin-left: 6px;
+            animation: pulse-new 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-new {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         /* ── READINGS SECTION ── */
         .readings-section {
             margin-bottom: 32px;
@@ -490,6 +509,206 @@
             .link-tags { display: none; }
         }
 
+        /* ── FLOATING SUGGESTION POP ── */
+        .suggestion-pop {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .suggestion-bubble {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 8px 32px rgba(26,26,46,0.18);
+            padding: 20px 22px;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-pop.open .suggestion-bubble {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .bubble-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .bubble-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .bubble-close {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-warm);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .bubble-close:hover {
+            background: var(--accent-coral-light);
+        }
+
+        .bubble-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .bubble-item {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .bubble-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
+        .bubble-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            background: var(--dark-warm);
+            padding: 9px 20px;
+            border-radius: 100px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .bubble-cta:hover {
+            background: var(--accent-coral);
+            transform: translateY(-1px);
+        }
+
+        .suggestion-fab {
+            width: auto;
+            height: 56px;
+            border-radius: 100px;
+            background: var(--accent-coral);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 22px;
+            box-shadow: 0 4px 16px rgba(232,93,76,0.35);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .suggestion-fab:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 24px rgba(232,93,76,0.45);
+        }
+
+        .fab-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-pop.open .fab-label {
+            display: none;
+        }
+
+        .suggestion-fab .fab-icon,
+        .suggestion-fab .fab-close {
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-fab .fab-close {
+            position: absolute;
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+
+        .suggestion-pop.open .suggestion-fab {
+            width: 56px;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .suggestion-pop.open .suggestion-fab .fab-icon {
+            opacity: 0;
+            transform: rotate(90deg);
+            position: absolute;
+        }
+
+        .suggestion-pop.open .suggestion-fab .fab-close {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        .fab-pulse {
+            position: absolute;
+            inset: 0;
+            border-radius: 100px;
+            background: var(--accent-coral);
+            animation: fab-ring 2.5s ease-out infinite;
+            pointer-events: none;
+        }
+
+        .suggestion-pop.open .fab-pulse {
+            animation: none;
+            opacity: 0;
+        }
+
+        @keyframes fab-ring {
+            0% { transform: scale(1); opacity: 0.35; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+
+        @media (max-width: 640px) {
+            .suggestion-pop { bottom: 16px; right: 16px; }
+            .suggestion-bubble { max-width: 260px; padding: 16px 18px; }
+            .suggestion-fab { height: 50px; padding: 0 18px; }
+            .fab-label { font-size: 12px; }
+            .suggestion-pop.open .suggestion-fab { width: 50px; }
+        }
+
         /* ── FOOTER ── */
         .footer {
             text-align: center;
@@ -510,8 +729,8 @@
         /* ── RESPONSIVE ── */
         @media (max-width: 640px) {
             .page { padding: 16px 12px 32px; }
-            .hero { padding: 28px 24px 24px; }
-            .hero-title { font-size: 26px; }
+            .hero { padding: 22px 20px 20px; }
+            .hero-title { font-size: 22px; }
             .hero-main { flex-direction: column; text-align: center; }
             .hero-desc { max-width: 100%; }
             .card-body { flex-direction: column; text-align: center; }
@@ -551,7 +770,7 @@
 
             <div class="hero-main">
                 <!-- Pixel original con gafas y red neuronal -->
-                <svg width="100" height="116" viewBox="0 0 130 140" fill="none">
+                <svg width="76" height="88" viewBox="0 0 130 140" fill="none">
                     <ellipse cx="30" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(10 30 95)"/>
                     <ellipse cx="32" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(10 32 94)"/>
                     <ellipse cx="100" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(-10 100 95)"/>
@@ -606,19 +825,64 @@
         </div>
 
         <div class="playbook-grid">
-            <!-- Vol 0 — INTRODUCTORIO -->
-            <a href="vol0/" class="playbook-card">
+            <!-- Vol 4 — PRÓXIMAMENTE -->
+            <div class="playbook-card coming-soon">
                 <div class="playbook-card-inner">
-                    <div class="card-accent" style="background:var(--accent-gold)"></div>
+                    <div class="card-accent teal"></div>
                     <div class="card-body">
                         <div class="card-content">
-                            <div class="card-vol">Playbook <span class="vol-num" style="background:var(--accent-gold)">Vol. 0</span></div>
-                            <div class="card-title">Glosario de Analítica Avanzada</div>
-                            <div class="card-desc">22 términos que vas a encontrar en cada playbook: accuracy, recall, lift, overfitting, incrementalidad y más. Explicados sin jerga, con analogías de negocio.</div>
+                            <div class="card-vol">Playbook <span class="vol-num" style="background:var(--accent-teal)">Vol. 4</span></div>
+                            <div class="card-title">🎲 ¿Cómo funciona un muestreo? <span class="coming-badge">Próximamente</span></div>
+                            <div class="card-desc">Muestreo aleatorio, estratificado, por conveniencia: cuándo usar cada uno, qué tamaño necesitas y por qué un mal muestreo invalida cualquier análisis.</div>
                             <div class="card-tags">
-                                <span class="card-tag">Glosario</span>
-                                <span class="card-tag">22 Términos</span>
-                                <span class="card-tag">Referencia</span>
+                                <span class="card-tag">Muestreo</span>
+                                <span class="card-tag">Estadística</span>
+                            </div>
+                        </div>
+                        <div class="card-arrow">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M4 9h10M10 5l4 4-4 4" stroke="#3D3A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vol 3 — NUEVO -->
+            <a href="vol3/" class="playbook-card">
+                <div class="playbook-card-inner">
+                    <div class="card-accent" style="background:#7C5CBF"></div>
+                    <div class="card-body">
+                        <div class="card-content">
+                            <div class="card-vol">Playbook <span class="vol-num" style="background:#7C5CBF">Vol. 3</span></div>
+                            <div class="card-title">📦 Qué problema resuelve un <span style="color:#7C5CBF;font-weight:700">recomendador</span> (y cuál no) <span class="new-badge">Nuevo</span></div>
+                            <div class="card-desc">Sistemas de recomendación: cuándo aportan valor real al negocio y cuándo son overkill. Collaborative filtering, content-based y cuándo basta una regla simple.</div>
+                            <div class="card-tags">
+                                <span class="card-tag">Recomendadores</span>
+                                <span class="card-tag">Personalización</span>
+                            </div>
+                        </div>
+                        <div class="card-arrow">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M4 9h10M10 5l4 4-4 4" stroke="#3D3A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Vol 2 -->
+            <a href="vol2/" class="playbook-card">
+                <div class="playbook-card-inner">
+                    <div class="card-accent teal"></div>
+                    <div class="card-body">
+                        <div class="card-content">
+                            <div class="card-vol">Playbook <span class="vol-num" style="background:var(--accent-teal)">Vol. 2</span></div>
+                            <div class="card-title">🎯 A/B Testing: <span class="hi-teal">errores comunes</span></div>
+                            <div class="card-desc">Guía para evitar los errores más frecuentes al diseñar y evaluar experimentos A/B.</div>
+                            <div class="card-tags">
+                                <span class="card-tag">A/B Testing</span>
+                                <span class="card-tag">Experimentación</span>
                             </div>
                         </div>
                         <div class="card-arrow">
@@ -654,18 +918,19 @@
                 </div>
             </a>
 
-            <!-- Vol 2 — ACTIVO -->
-            <a href="vol2/" class="playbook-card">
+            <!-- Vol 0 — INTRODUCTORIO -->
+            <a href="vol0/" class="playbook-card">
                 <div class="playbook-card-inner">
-                    <div class="card-accent teal"></div>
+                    <div class="card-accent" style="background:var(--accent-gold)"></div>
                     <div class="card-body">
                         <div class="card-content">
-                            <div class="card-vol">Playbook <span class="vol-num" style="background:var(--accent-teal)">Vol. 2</span></div>
-                            <div class="card-title">🎯 A/B Testing: <span class="hi-teal">errores comunes</span></div>
-                            <div class="card-desc">Guía para evitar los errores más frecuentes al diseñar y evaluar experimentos A/B.</div>
+                            <div class="card-vol">Playbook <span class="vol-num" style="background:var(--accent-gold)">Vol. 0</span></div>
+                            <div class="card-title">Glosario de Analítica Avanzada</div>
+                            <div class="card-desc">22 términos que vas a encontrar en cada playbook: accuracy, recall, lift, overfitting, incrementalidad y más. Explicados sin jerga, con analogías de negocio.</div>
                             <div class="card-tags">
-                                <span class="card-tag">A/B Testing</span>
-                                <span class="card-tag">Experimentación</span>
+                                <span class="card-tag">Glosario</span>
+                                <span class="card-tag">22 Términos</span>
+                                <span class="card-tag">Referencia</span>
                             </div>
                         </div>
                         <div class="card-arrow">
@@ -676,29 +941,6 @@
                     </div>
                 </div>
             </a>
-
-            <!-- Vol 3 — PRÓXIMAMENTE -->
-            <div class="playbook-card coming-soon">
-                <div class="playbook-card-inner">
-                    <div class="card-accent coral"></div>
-                    <div class="card-body">
-                        <div class="card-content">
-                            <div class="card-vol">Playbook <span class="vol-num">Vol. 3</span></div>
-                            <div class="card-title">📦 Qué problema resuelve un recomendador (y cuál no) <span class="coming-badge">Próximamente</span></div>
-                            <div class="card-desc">Sistemas de recomendación: cuándo aportan valor real al negocio y cuándo son overkill. Collaborative filtering, content-based y cuándo basta una regla simple.</div>
-                            <div class="card-tags">
-                                <span class="card-tag">Recomendadores</span>
-                                <span class="card-tag">Personalización</span>
-                            </div>
-                        </div>
-                        <div class="card-arrow">
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                <path d="M4 9h10M10 5l4 4-4 4" stroke="#3D3A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- LECTURAS ADICIONALES -->
@@ -770,6 +1012,15 @@
                                 <div class="link-tags"><span class="link-tag">Vol. 2</span></div>
                                 <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </a>
+                            <a href="https://www.codecademy.com/article/how-netflix-recommendation-works-data-science" target="_blank" class="reading-link">
+                                <div class="link-bullet" style="background:var(--accent-gold)"></div>
+                                <div class="link-info">
+                                    <div class="link-title">How Netflix Recommendation Works <span class="new-badge">Nuevo</span></div>
+                                    <div class="link-source">Codecademy — Explicación clara de collaborative filtering, matrix factorization y el motor de Netflix</div>
+                                </div>
+                                <div class="link-tags"><span class="link-tag">Vol. 3</span></div>
+                                <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -815,6 +1066,15 @@
                                 <div class="link-tags"><span class="link-tag">Paper</span><span class="link-tag">Elsevier</span></div>
                                 <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </a>
+                            <a href="https://eugeneyan.com/writing/recsys-llm/" target="_blank" class="reading-link">
+                                <div class="link-bullet" style="background:var(--accent-coral)"></div>
+                                <div class="link-info">
+                                    <div class="link-title">Improving RecSys & Search in the Age of LLMs <span class="new-badge">Nuevo</span></div>
+                                    <div class="link-source">Eugene Yan — Deep dive técnico: cómo LLMs están transformando los sistemas de recomendación (Spotify, Netflix, Etsy)</div>
+                                </div>
+                                <div class="link-tags"><span class="link-tag">Vol. 3</span><span class="link-tag">LLMs</span></div>
+                                <svg class="link-external" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3v5" stroke="#7a7a8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -827,5 +1087,50 @@
             <p>Advanced Analytics — Data Science & ML</p>
         </div>
     </div>
+    <!-- FLOATING SUGGESTION POP -->
+    <div class="suggestion-pop" id="suggestionPop">
+        <div class="suggestion-bubble">
+            <div class="bubble-header">
+                <div class="bubble-title">💡 ¿Qué te gustaría ver?</div>
+                <button class="bubble-close" onclick="togglePop()">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="#3D3A36" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+            <div class="bubble-items">
+                <div class="bubble-item">
+                    <div class="bubble-dot" style="background:var(--accent-coral)"></div>
+                    Sugerencias de temas
+                </div>
+                <div class="bubble-item">
+                    <div class="bubble-dot" style="background:var(--accent-teal)"></div>
+                    Preguntas sobre algún volumen
+                </div>
+                <div class="bubble-item">
+                    <div class="bubble-dot" style="background:var(--accent-gold)"></div>
+                    Temas que quieras profundizar
+                </div>
+                <div class="bubble-item">
+                    <div class="bubble-dot" style="background:var(--accent-coral)"></div>
+                    Ideas que quieras desarrollar
+                </div>
+            </div>
+            <a href="mailto:data-scientist@alicorp.com.pe?subject=Playbook%20Analytics%20—%20Sugerencia" class="bubble-cta">
+                Escribir al equipo
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8.5 3.5L12 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+        <button class="suggestion-fab" onclick="togglePop()">
+            <div class="fab-pulse"></div>
+            <svg class="fab-icon" width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="5" width="18" height="13" rx="2" stroke="white" stroke-width="1.8"/><path d="M2 7l8.4 5.25a1 1 0 001.2 0L20 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="fab-label">Buzón Analytics</span>
+            <svg class="fab-close" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </button>
+    </div>
+
+    <script>
+        function togglePop() {
+            document.getElementById('suggestionPop').classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
