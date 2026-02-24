@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ╔══════════════════════════════════════════════════════════╗
+         ║  PLAYBOOK ANALYTICS — TEMPLATE Vol. X                   ║
+         ║  Cambiar: título, contenido de cada sección             ║
+         ║  NO cambiar: colores, fuentes, estructura, Pixel SVGs   ║
+         ╚══════════════════════════════════════════════════════════╝ -->
+
+    <!-- 🔄 CAMBIAR: título del playbook -->
+    <title>Qué problema resuelve un recomendador (y cuál no) | Playbook Analytics</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ╔══════════════════════════════════════╗
+           ║  🎨 SISTEMA DE DISEÑO — NO CAMBIAR   ║
+           ╚══════════════════════════════════════╝ */
+
+        :root {
+            /* Fondos */
+            --bg-cream: #FDFBF7;
+            --bg-warm: #F8F5F0;
+            --bg-card: #FFFFFF;
+
+            /* Textos */
+            --text-primary: #3D3A36;
+            --text-secondary: #4a4a5a;
+            --text-muted: #7a7a8a;
+
+            /* Acentos — Coral (negativo/alerta) */
+            --accent-coral: #E85D4C;
+            --accent-coral-dark: #C94A3A;
+            --accent-coral-light: #FFF0EE;
+
+            /* Acentos — Teal (positivo/solución) */
+            --accent-teal: #2D9C9C;
+            --accent-teal-dark: #238080;
+            --accent-teal-light: #E8F6F6;
+
+            /* Acentos — Gold (neutral/insight) */
+            --accent-gold: #D4A853;
+            --accent-gold-dark: #C4983F;
+            --accent-gold-light: #FDF8EC;
+
+            /* Otros */
+            --dark-warm: #3D3A36;
+            --border-light: #E8E4DD;
+            --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-primary);
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 24px;
+            line-height: 1.5;
+        }
+
+
+        /* ══════════════════════════════
+           SECCIÓN 1: HEADER
+           ══════════════════════════════ */
+
+        header {
+            background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--accent-coral-light) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-main {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-avatar { flex-shrink: 0; }
+        .header-text { flex: 1; position: relative; z-index: 1; }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .area-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .area-logo svg { width: 30px; height: 30px; }
+        .logo-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+        }
+        .logo-tagline {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent-coral);
+            text-transform: uppercase;
+        }
+        .badge-dot { width: 6px; height: 6px; background: var(--accent-coral); border-radius: 50%; }
+        .badge-vol { background: var(--accent-coral); color: white; padding: 1px 6px; border-radius: 4px; font-size: 9px; font-weight: 700; }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        h1 .highlight { color: var(--accent-coral); }
+
+        .subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            max-width: 400px;
+        }
+
+
+        /* ══════════════════════════════
+           SECCIÓN 2: PROBLEMA
+           ══════════════════════════════ */
+
+        .problem-section {
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent-gold);
+            border-radius: 0 14px 14px 0;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .problem-content h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-coral);
+            margin-bottom: 6px;
+        }
+
+        .problem-content p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .problem-content p strong { color: var(--text-primary); }
+
+
+        /* ══════════════════════════════
+           SECCIÓN 3: GRID PRINCIPAL (2 columnas)
+           Usar para: Sí vs No, Antes vs Después, 
+           Bueno vs Malo, etc.
+           ══════════════════════════════ */
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-icon.positive { background: var(--accent-teal-light); }
+        .card-icon.negative { background: var(--accent-coral-light); }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .card-title.positive { color: var(--accent-teal); }
+        .card-title.negative { color: var(--accent-coral); }
+
+        .card-pixel { margin-left: auto; }
+
+        .item-list {
+            list-style: none;
+        }
+
+        .item-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .list-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 9px;
+            margin-top: 1px;
+        }
+
+        .list-icon.positive { background: var(--accent-teal-light); color: var(--accent-teal); }
+        .list-icon.negative { background: var(--accent-coral-light); color: var(--accent-coral); }
+
+        .list-text strong {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .list-text span {
+            display: block;
+            font-size: 9px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+
+        /* ══════════════════════════════
+           SECCIÓN 4: EJEMPLO / CASO DE USO
+           Usar para: comparar 2 enfoques
+           ══════════════════════════════ */
+
+        .example-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .example-icon { font-size: 16px; }
+
+        .example-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-coral);
+            flex: 1;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .case-card {
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .case-card.option-a {
+            border: 1px dashed rgba(232, 93, 76, 0.3);
+            background: var(--accent-coral-light);
+        }
+
+        .case-card.option-b {
+            border: 2px solid var(--accent-teal);
+            background: var(--accent-teal-light);
+        }
+
+        .case-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .case-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        .case-card.option-a .case-number { background: var(--accent-coral); }
+        .case-card.option-b .case-number { background: var(--accent-teal); }
+
+        .case-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .case-card.option-a .case-label { color: var(--accent-coral); }
+        .case-card.option-b .case-label { color: var(--accent-teal); }
+
+        .case-rule {
+            background: white;
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .case-detail {
+            font-size: 9px;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+
+        .case-detail strong.a { color: var(--accent-coral); }
+        .case-detail strong.b { color: var(--accent-teal); }
+
+        .case-result {
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .case-result.bad { background: rgba(232, 93, 76, 0.1); }
+        .case-result.good { background: rgba(45, 156, 156, 0.15); }
+
+        .result-label { display: block; font-size: 8px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
+        .result-value { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; }
+        .case-result.bad .result-value { color: var(--accent-coral); }
+        .case-result.good .result-value { color: var(--accent-teal); }
+        .result-desc { display: block; font-size: 8px; color: var(--text-muted); margin-top: 2px; }
+
+        .example-insight {
+            background: var(--accent-gold-light);
+            border-top: 2px solid var(--accent-gold);
+            border-radius: 0 0 8px 8px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .example-insight strong { color: var(--accent-gold); }
+        .example-insight em { color: var(--accent-teal); text-decoration: underline; font-style: normal; }
+
+
+        /* ══════════════════════════════
+           SECCIÓN 5: ERROR COMÚN
+           ══════════════════════════════ */
+
+        .error-section {
+            background: var(--accent-coral-light);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+
+        .error-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .error-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-coral);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .error-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-coral);
+            flex: 1;
+        }
+
+        .error-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .error-box {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 10px;
+        }
+
+        .error-box .label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .error-box.wrong { border: 1px dashed var(--accent-coral); }
+        .error-box.wrong .label { color: var(--accent-coral); }
+        .error-box.right { border: 1px solid var(--accent-teal); }
+        .error-box.right .label { color: var(--accent-teal); }
+        .error-box p { color: var(--text-secondary); line-height: 1.4; }
+
+
+        /* ══════════════════════════════
+           SECCIÓN 6: TAKEAWAY
+           ══════════════════════════════ */
+
+        .takeaway {
+            background: linear-gradient(135deg, var(--dark-warm) 0%, #2a2a3e 100%);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .takeaway-text {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        .takeaway-text strong {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+
+        /* ══════════════════════════════
+           SECCIÓN 7: FOOTER
+           ══════════════════════════════ */
+
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-logo svg { width: 24px; height: 24px; }
+
+        .footer-logo-text .footer-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .footer-logo-text .footer-tagline {
+            font-size: 8px;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .footer-tags { display: flex; gap: 6px; }
+
+        .footer-tag {
+            font-size: 9px;
+            background: var(--bg-warm);
+            padding: 3px 10px;
+            border-radius: 100px;
+            color: var(--text-muted);
+            border: 1px solid var(--border-light);
+        }
+
+
+        /* ══════════════════════════════
+           WEB / GITHUB PAGES — NO CAMBIAR
+           ══════════════════════════════ */
+
+        html { background: #f0ede8; }
+
+        .web-wrapper {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        @media (max-width: 800px) {
+            body { width: 100% !important; padding: 16px !important; }
+            .main-grid, .cases-grid, .error-content { grid-template-columns: 1fr !important; }
+            h1 { font-size: 22px !important; }
+            .web-wrapper { padding: 16px 8px; }
+        }
+
+        ::selection {
+            background: rgba(232, 93, 76, 0.2);
+            color: var(--text-primary);
+        }
+
+        /* Barra de navegación sticky */
+        .back-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(61, 58, 54, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0 0 12px 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: white;
+            text-decoration: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 100px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.2); }
+        .back-btn svg { width: 14px; height: 14px; }
+
+        .back-bar-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .back-bar { display: none; }
+            .web-wrapper { padding: 0; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="web-wrapper">
+
+        <!-- Barra de navegación — 🔄 CAMBIAR: Vol. 3 -->
+        <div class="back-bar">
+            <a href="../" class="back-btn">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Todos los Playbooks
+            </a>
+            <span class="back-bar-label">Playbook VOL. 3</span>
+        </div>
+
+
+    <!-- ╔═══════════════════════════════════════════════╗
+         ║  SECCIÓN 1: HEADER                            ║
+         ║  🔄 Cambiar: título (h1), subtítulo           ║
+         ║  🔄 Cambiar: Vol. 3 en el badge               ║
+         ╚═══════════════════════════════════════════════╝ -->
+
+    <header>
+        <div class="header-main">
+            <!-- 🦉 PIXEL: Principal con gafas y red neuronal — NO CAMBIAR -->
+            <div class="header-avatar">
+                <svg width="95" height="110" viewBox="0 0 130 140" fill="none">
+                    <ellipse cx="30" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(10 30 95)"/>
+                    <ellipse cx="32" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(10 32 94)"/>
+                    <ellipse cx="100" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(-10 100 95)"/>
+                    <ellipse cx="98" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(-10 98 94)"/>
+                    <ellipse cx="65" cy="95" rx="38" ry="33" fill="url(#hBody)"/>
+                    <ellipse cx="65" cy="100" rx="26" ry="23" fill="#FFF0EE"/>
+                    <circle cx="50" cy="88" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="65" cy="82" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="80" cy="88" r="5" fill="#E85D4C" fill-opacity="0.7"/>
+                    <circle cx="55" cy="100" r="5" fill="#E85D4C" fill-opacity="0.5"/>
+                    <circle cx="75" cy="100" r="5" fill="#E85D4C" fill-opacity="0.5"/>
+                    <circle cx="65" cy="112" r="6" fill="#D4A853"/>
+                    <line x1="50" y1="88" x2="65" y2="82" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.5"/>
+                    <line x1="80" y1="88" x2="65" y2="82" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.5"/>
+                    <line x1="50" y1="88" x2="55" y2="100" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.4"/>
+                    <line x1="80" y1="88" x2="75" y2="100" stroke="#E85D4C" stroke-width="2" stroke-opacity="0.4"/>
+                    <line x1="55" y1="100" x2="65" y2="112" stroke="#D4A853" stroke-width="2" stroke-opacity="0.6"/>
+                    <line x1="75" y1="100" x2="65" y2="112" stroke="#D4A853" stroke-width="2" stroke-opacity="0.6"/>
+                    <ellipse cx="65" cy="50" rx="33" ry="28" fill="url(#hHead)"/>
+                    <path d="M37 35L32 17L47 30Z" fill="#C94A3A"/>
+                    <path d="M93 35L98 17L83 30Z" fill="#C94A3A"/>
+                    <circle cx="50" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+                    <circle cx="80" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+                    <circle cx="52" cy="50" r="6" fill="#3D3A36"/>
+                    <circle cx="82" cy="50" r="6" fill="#3D3A36"/>
+                    <circle cx="54" cy="48" r="2" fill="white"/>
+                    <circle cx="84" cy="48" r="2" fill="white"/>
+                    <path d="M37 48C37 48 42 43 50 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M93 48C93 48 88 43 80 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="62" y1="48" x2="68" y2="48" stroke="#D4A853" stroke-width="3"/>
+                    <path d="M65 60L61 69L65 67L69 69Z" fill="#D4A853"/>
+                    <path d="M50 123L45 133M50 123L50 133M50 123L55 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M80 123L75 133M80 123L80 133M80 123L85 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="hBody" x1="27" y1="62" x2="103" y2="128"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+                        <linearGradient id="hHead" x1="32" y1="22" x2="98" y2="78"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <div class="header-text">
+                <div class="header-top">
+                    <!-- Logo del área — NO CAMBIAR -->
+                    <div class="area-logo">
+                        <svg viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="10" fill="url(#logoGrad)"/>
+                            <circle cx="12" cy="15" r="3" fill="white"/>
+                            <circle cx="12" cy="20" r="3" fill="white"/>
+                            <circle cx="12" cy="25" r="3" fill="white"/>
+                            <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+                            <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+                            <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+                            <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient></defs>
+                        </svg>
+                        <div class="area-logo-text">
+                            <span class="logo-name">Advanced Analytics</span>
+                            <span class="logo-tagline">Data Science & ML</span>
+                        </div>
+                    </div>
+
+                    <!-- 🔄 CAMBIAR: VOL. 3 -->
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        Playbook
+                        <span class="badge-vol">VOL. 3</span>
+                    </div>
+                </div>
+
+                <!-- 🔄 CAMBIAR: título y subtítulo -->
+                <h1>
+                    Qué problema <span class="highlight">resuelve</span> un recomendador<br>(y <span class="highlight">cuál no)</span>
+                </h1>
+                <p class="subtitle">Un recomendador es un aliado para priorizar la siguiente mejor oportunidad por cliente, cuando se integra bien a la operación, se traduce en adopción y crecimiento incremental medible.</p>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ╔═══════════════════════════════════════════════╗
+         ║  SECCIÓN 2: EL PROBLEMA QUE RESUELVE          ║
+         ║  🔄 Cambiar: emoji, título, descripción        ║
+         ║  🦉 Pixel: Pensando (ojos arriba, boca recta)  ║
+         ╚═══════════════════════════════════════════════╝ -->
+
+    <div class="problem-section">
+        <!-- 🦉 PIXEL: Pensando -->
+        <svg width="46" height="53" viewBox="0 0 120 140" fill="none">
+            <ellipse cx="60" cy="95" rx="36" ry="31" fill="#E85D4C"/>
+            <ellipse cx="32" cy="70" rx="9" ry="16" fill="#C94A3A" transform="rotate(-30 32 70)"/>
+            <ellipse cx="35" cy="72" rx="6" ry="11" fill="#E85D4C" transform="rotate(-30 35 72)"/>
+            <ellipse cx="92" cy="88" rx="9" ry="15" fill="#C94A3A" transform="rotate(15 92 88)"/>
+            <ellipse cx="90" cy="86" rx="6" ry="11" fill="#E85D4C" transform="rotate(15 90 86)"/>
+            <ellipse cx="60" cy="100" rx="22" ry="19" fill="#FFF0EE"/>
+            <circle cx="50" cy="92" r="4" fill="#E85D4C" fill-opacity="0.5"/>
+            <circle cx="60" cy="87" r="4" fill="#E85D4C" fill-opacity="0.5"/>
+            <circle cx="70" cy="92" r="4" fill="#E85D4C" fill-opacity="0.5"/>
+            <circle cx="60" cy="106" r="5" fill="#D4A853"/>
+            <ellipse cx="60" cy="50" rx="32" ry="27" fill="#E85D4C"/>
+            <path d="M33 35L29 19L43 32Z" fill="#C94A3A"/>
+            <path d="M87 35L91 19L77 32Z" fill="#C94A3A"/>
+            <circle cx="46" cy="48" r="12" fill="white"/>
+            <circle cx="74" cy="48" r="12" fill="white"/>
+            <circle cx="48" cy="45" r="5" fill="#3D3A36"/>
+            <circle cx="76" cy="45" r="5" fill="#3D3A36"/>
+            <circle cx="49" cy="43" r="1.5" fill="white"/>
+            <circle cx="77" cy="43" r="1.5" fill="white"/>
+            <path d="M54 67C54 67 60 67 66 67" stroke="#D4A853" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M60 59L57 66L60 64L63 66Z" fill="#D4A853"/>
+            <text x="88" y="26" fill="#D4A853" font-size="14" font-weight="bold">?</text>
+        </svg>
+        <div class="problem-content">
+            <!-- 🔄 CAMBIAR -->
+            <h2>🎯 El problema que resuelve</h2>
+            <p>Cuando se implementa un recomendador, el negocio suele esperar un “botón de vender más”. Si las recomendaciones no se traducen en venta inmediata, se declara “no sirve”. <strong>Este playbook aclara qué valor entrega un recomendador… y dónde termina su responsabilidad.</strong></p>
+        </div>
+    </div>
+
+
+    <!-- ╔═══════════════════════════════════════════════╗
+         ║  SECCIÓN 3: GRID PRINCIPAL (2 columnas)        ║
+         ║  🔄 Cambiar: títulos, items de la lista         ║
+         ║  🦉 Pixel: Feliz (izq) y Preocupado (der)      ║
+         ╚═══════════════════════════════════════════════╝ -->
+
+    <div class="main-grid">
+        <!-- Columna positiva -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon positive">
+                    <!-- 🦉 PIXEL mini Feliz (teal) -->
+                    <svg width="26" height="26" viewBox="0 0 50 50" fill="none">
+                        <ellipse cx="25" cy="30" rx="14" ry="12" fill="#2D9C9C"/>
+                        <ellipse cx="25" cy="20" rx="13" ry="11" fill="#2D9C9C"/>
+                        <circle cx="19" cy="18" r="4" fill="white"/><circle cx="31" cy="18" r="4" fill="white"/>
+                        <circle cx="20" cy="19" r="2" fill="#3D3A36"/><circle cx="32" cy="19" r="2" fill="#3D3A36"/>
+                        <path d="M20 26C20 26 25 30 30 26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <!-- 🔄 CAMBIAR: título columna positiva -->
+                <div class="card-title positive">Qué SÍ resuelve</div>
+                <div class="card-pixel">
+                    <!-- 🦉 PIXEL: Feliz con pulgar arriba -->
+                    <svg width="38" height="44" viewBox="0 0 130 140" fill="none">
+                        <ellipse cx="65" cy="95" rx="34" ry="29" fill="#2D9C9C"/>
+                        <ellipse cx="35" cy="88" rx="9" ry="15" fill="#238080" transform="rotate(-15 35 88)"/>
+                        <ellipse cx="37" cy="86" rx="6" ry="11" fill="#2D9C9C" transform="rotate(-15 37 86)"/>
+                        <ellipse cx="102" cy="70" rx="9" ry="17" fill="#238080" transform="rotate(60 102 70)"/>
+                        <ellipse cx="100" cy="73" rx="6" ry="12" fill="#2D9C9C" transform="rotate(60 100 73)"/>
+                        <ellipse cx="65" cy="100" rx="21" ry="18" fill="#E8F6F6"/>
+                        <circle cx="55" cy="94" r="3" fill="#2D9C9C" fill-opacity="0.5"/>
+                        <circle cx="65" cy="90" r="3" fill="#2D9C9C" fill-opacity="0.5"/>
+                        <circle cx="75" cy="94" r="3" fill="#2D9C9C" fill-opacity="0.5"/>
+                        <circle cx="65" cy="106" r="4" fill="#D4A853"/>
+                        <ellipse cx="65" cy="50" rx="30" ry="25" fill="#2D9C9C"/>
+                        <path d="M40 35L36 21L50 33Z" fill="#238080"/>
+                        <path d="M90 35L94 21L80 33Z" fill="#238080"/>
+                        <circle cx="50" cy="48" r="11" fill="white"/><circle cx="80" cy="48" r="11" fill="white"/>
+                        <circle cx="52" cy="50" r="5" fill="#3D3A36"/><circle cx="82" cy="50" r="5" fill="#3D3A36"/>
+                        <circle cx="53" cy="48" r="1.5" fill="white"/><circle cx="83" cy="48" r="1.5" fill="white"/>
+                        <path d="M55 64C55 64 65 72 75 64" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M65 57L62 64L65 62L68 64Z" fill="#D4A853"/>
+                    </svg>
+                </div>
+            </div>
+            <ul class="item-list">
+                <li>
+                    <div class="list-icon positive">✓</div>
+                    <div class="list-text">
+                        <strong>Reduce la fricción de elegir</strong>
+                        <span>Cuando hay demasiadas opciones (skus, promos, rutas), el recomendador acorta el camino y sugiere “lo más probable” para cada cliente o contexto.</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-icon positive">✓</div>
+                    <div class="list-text">
+                        <strong>Aumenta el descubrimiento de productos relevantes</strong>
+                        <span>Saca a la luz productos que el cliente sí compraría, pero no encuentra solo (por falta de visibilidad, hábito o tiempo).</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-icon positive">✓</div>
+                    <div class="list-text">
+                        <strong>Mejora el mix y el cross-sell</strong>
+                        <span>Propone complementos lógicos (“si lleva X, probablemente también Y”), elevando ticket y variedad.</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-icon positive">✓</div>
+                    <div class="list-text">
+                        <strong>Ordena prioridades comerciales</strong>
+                        <span>Ayuda a decidir qué empujar primero: top oportunidades por cliente, por zona, por segmento.</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-icon positive">✓</div>
+                    <div class="list-text">
+                        <strong>Responde rápido a señales</strong>
+                        <span>Si cambian patrones (lanzamientos, cambios de precio), puede ajustar sugerencias más rápido que un enfoque manual.</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Columna negativa -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon negative">
+                    <!-- 🦉 PIXEL mini Triste (coral) -->
+                    <svg width="26" height="26" viewBox="0 0 50 50" fill="none">
+                        <ellipse cx="25" cy="30" rx="14" ry="12" fill="#E85D4C"/>
+                        <ellipse cx="25" cy="20" rx="13" ry="11" fill="#E85D4C"/>
+                        <circle cx="19" cy="18" r="4" fill="white"/><circle cx="31" cy="18" r="4" fill="white"/>
+                        <circle cx="20" cy="19" r="2" fill="#3D3A36"/><circle cx="32" cy="19" r="2" fill="#3D3A36"/>
+                        <path d="M20 28C20 28 25 24 30 28" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <!-- 🔄 CAMBIAR: título columna negativa -->
+                <div class="card-title negative">Qué NO resuelve</div>
+                <div class="card-pixel">
+                    <!-- 🦉 PIXEL: Preocupado con cejas -->
+                    <svg width="38" height="44" viewBox="0 0 130 140" fill="none">
+                        <ellipse cx="65" cy="95" rx="34" ry="29" fill="#E85D4C"/>
+                        <ellipse cx="50" cy="82" rx="9" ry="15" fill="#C94A3A" transform="rotate(25 50 82)"/>
+                        <ellipse cx="52" cy="84" rx="6" ry="11" fill="#E85D4C" transform="rotate(25 52 84)"/>
+                        <ellipse cx="80" cy="82" rx="9" ry="15" fill="#C94A3A" transform="rotate(-25 80 82)"/>
+                        <ellipse cx="78" cy="84" rx="6" ry="11" fill="#E85D4C" transform="rotate(-25 78 84)"/>
+                        <ellipse cx="65" cy="100" rx="21" ry="18" fill="#FFF0EE"/>
+                        <circle cx="55" cy="94" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                        <circle cx="65" cy="90" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                        <circle cx="75" cy="94" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                        <circle cx="65" cy="106" r="4" fill="#D4A853"/>
+                        <ellipse cx="65" cy="50" rx="30" ry="25" fill="#E85D4C"/>
+                        <path d="M40 35L36 21L50 33Z" fill="#C94A3A"/>
+                        <path d="M90 35L94 21L80 33Z" fill="#C94A3A"/>
+                        <circle cx="50" cy="48" r="11" fill="white"/><circle cx="80" cy="48" r="11" fill="white"/>
+                        <circle cx="52" cy="50" r="5" fill="#3D3A36"/><circle cx="82" cy="50" r="5" fill="#3D3A36"/>
+                        <circle cx="53" cy="48" r="1.5" fill="white"/><circle cx="83" cy="48" r="1.5" fill="white"/>
+                        <path d="M40 40C44 38 50 38 56 42" stroke="#C94A3A" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M90 40C86 38 80 38 74 42" stroke="#C94A3A" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M55 68C55 68 65 62 75 68" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M65 57L62 64L65 62L68 64Z" fill="#D4A853"/>
+                    </svg>
+                </div>
+            </div>
+            <ul class="item-list">
+                <li>
+                    <div class="list-icon negative">✕</div>
+                    <div class="list-text">
+                        <strong>No “crea demanda” de la nada</strong>
+                        <span>Recomendar ≠ vender: depende de precio, stock, ejecución y contexto.</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-icon negative">✕</div>
+                    <div class="list-text">
+                        <strong>No reemplaza la estrategia comercial</strong>
+                        <span>No define portafolio, pricing, ni reglas de negocio. Puede apoyar, pero no decide el rumbo.</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-icon negative">✕</div>
+                    <div class="list-text">
+                        <strong>No reemplaza la ejecución</strong>
+                        <span>Es una pieza de la estrategia; si no hay cobertura y seguimiento la recomendación se queda en “buena idea” y no en resultado.</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-icon negative">✕</div>
+                    <div class="list-text">
+                        <strong>No elimina el “cold start”</strong>
+                        <span>Con poco historial, habrá mayor incertidumbre y exploración.</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-icon negative">✕</div>
+                    <div class="list-text">
+                        <strong>No capta todo el contexto del día a día</strong>
+                        <span>Aprende de patrones de compra, pero hay factores que no siempre están en los datos (acuerdos puntuales, eventos locales, etc.). Por eso rinde mejor cuando se complementa con criterio comercial.</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- ╔═══════════════════════════════════════════════╗
+         ║  SECCIÓN 4: EJEMPLO DE NEGOCIO                 ║
+         ║  🔄 Cambiar: título, caso A vs caso B           ║
+         ║  🦉 Pixel: Señalando                            ║
+         ╚═══════════════════════════════════════════════╝ -->
+
+    <div class="example-section">
+        <div class="example-header">
+            <div class="example-icon">📊</div>
+            <!-- 🔄 CAMBIAR -->
+            <div class="example-title">Ejemplo: Recomendador de skus “solo reglas” vs “con modelo”</div>
+            <!-- 🦉 PIXEL: Señalando -->
+            <svg width="36" height="42" viewBox="0 0 130 140" fill="none">
+                <ellipse cx="60" cy="95" rx="32" ry="27" fill="#E85D4C"/>
+                <ellipse cx="32" cy="86" rx="8" ry="14" fill="#C94A3A" transform="rotate(-15 32 86)"/>
+                <ellipse cx="34" cy="84" rx="5" ry="10" fill="#E85D4C" transform="rotate(-15 34 84)"/>
+                <ellipse cx="100" cy="72" rx="8" ry="16" fill="#C94A3A" transform="rotate(70 100 72)"/>
+                <ellipse cx="98" cy="75" rx="5" ry="11" fill="#E85D4C" transform="rotate(70 98 75)"/>
+                <ellipse cx="60" cy="100" rx="19" ry="16" fill="#FFF0EE"/>
+                <circle cx="52" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="60" cy="91" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="68" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="60" cy="105" r="4" fill="#D4A853"/>
+                <ellipse cx="60" cy="50" rx="28" ry="24" fill="#E85D4C"/>
+                <path d="M37 35L33 22L46 33Z" fill="#C94A3A"/>
+                <path d="M83 35L87 22L74 33Z" fill="#C94A3A"/>
+                <circle cx="47" cy="48" r="10" fill="white"/><circle cx="73" cy="48" r="10" fill="white"/>
+                <circle cx="50" cy="50" r="4" fill="#3D3A36"/><circle cx="76" cy="50" r="4" fill="#3D3A36"/>
+                <circle cx="51" cy="48" r="1.5" fill="white"/><circle cx="77" cy="48" r="1.5" fill="white"/>
+                <path d="M53 64C53 64 60 67 67 64" stroke="#D4A853" stroke-width="2" stroke-linecap="round"/>
+                <path d="M60 57L57 63L60 61L63 63Z" fill="#D4A853"/>
+            </svg>
+        </div>
+
+        <div class="cases-grid">
+            <!-- 🔄 CAMBIAR: Caso A (enfoque malo/limitado) -->
+            <div class="case-card option-a">
+                <div class="case-header">
+                    <span class="case-number">Caso 1</span>
+                    <span class="case-label">Recomendador con solo reglas (heurístico)</span>
+                </div>
+                <div class="case-rule"><span>📋</span> Recomendar Top 10 skus más vendidos de la categoría en la zona</div>
+                <div class="case-detail">👥 <strong class="a">Genérico:</strong> muchos clientes reciben casi lo mismo.</div>
+                <div class="case-detail">🪃 <strong class="a">Reactivo:</strong> se basa en lo que ya se vendió; le cuesta adelantarse a cambios (nuevas tendencias, estacionalidad fina).</div>
+                <div class="case-detail">🏆 <strong class="a">Sesgo a ‘best sellers’:</strong> termina empujando siempre lo más popular y descubre poco.</div>
+                <div class="case-detail">⚓ <strong class="a">Buena estabilidad:</strong> fácil de explicar y controlar. Ideal como baseline y para arrancar rápido.</div>
+                <div class="case-result bad">
+                    <span class="result-label">Resultado típico</span>
+                    <span class="result-value">~20%</span>
+                    <span class="result-desc">adopción en ejecución</span>
+                </div>
+            </div>
+
+            <!-- 🔄 CAMBIAR: Caso B (enfoque bueno/ML) -->
+            <div class="case-card option-b">
+                <div class="case-header">
+                    <span class="case-number">Caso 2</span>
+                    <span class="case-label">Recomendador con ML</span>
+                </div>
+                <div class="case-rule"><span>🧠</span> Aprende la probabilidad de compra por cliente-sku por comportamiento y contexto</div>
+                <div class="case-detail">🎯 <strong class="b">Personalización real:</strong> cada cliente recibe una lista distinta.</div>
+                <div class="case-detail">⚖️ <strong class="b">Mejor balance:</strong> combina “lo que ya compra” + “lo que debería comprar”.</div>
+                <div class="case-detail">🔄 <strong class="b">Aprende y se ajusta:</strong> si cambian hábitos, el modelo se reentrena y se adapta.</div>
+                <div class="case-detail">📌 <strong class="b">Ranking más fino:</strong> no solo “qué”, también “en qué orden” y “con qué prioridad”.</div>
+                <div class="case-result good">
+                    <span class="result-label">Resultado típico</span>
+                    <span class="result-value">~40%</span>
+                    <span class="result-desc">adopción + mayor cobertura</span>
+                </div>
+            </div>
+        </div>
+        <!-- 🔄 CAMBIAR: insight del ejemplo -->
+        <div class="example-section">
+  <div class="example-header">
+    <div class="example-icon">🧩</div>
+    <div class="example-title">Implementación y medición (en campo)</div>
+    <svg width="36" height="42" viewBox="0 0 130 140" fill="none">
+      <ellipse cx="60" cy="95" rx="32" ry="27" fill="#E85D4C"/>
+      <ellipse cx="32" cy="86" rx="8" ry="14" fill="#C94A3A" transform="rotate(-15 32 86)"/>
+      <ellipse cx="34" cy="84" rx="5" ry="10" fill="#E85D4C" transform="rotate(-15 34 84)"/>
+      <ellipse cx="100" cy="72" rx="8" ry="16" fill="#C94A3A" transform="rotate(70 100 72)"/>
+      <ellipse cx="98" cy="75" rx="5" ry="11" fill="#E85D4C" transform="rotate(70 98 75)"/>
+      <ellipse cx="60" cy="100" rx="19" ry="16" fill="#FFF0EE"/>
+      <circle cx="52" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+      <circle cx="60" cy="91" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+      <circle cx="68" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+      <circle cx="60" cy="105" r="4" fill="#D4A853"/>
+      <ellipse cx="60" cy="50" rx="28" ry="24" fill="#E85D4C"/>
+      <path d="M37 35L33 22L46 33Z" fill="#C94A3A"/>
+      <path d="M83 35L87 22L74 33Z" fill="#C94A3A"/>
+      <circle cx="47" cy="48" r="10" fill="white"/><circle cx="73" cy="48" r="10" fill="white"/>
+      <circle cx="50" cy="50" r="4" fill="#3D3A36"/><circle cx="76" cy="50" r="4" fill="#3D3A36"/>
+      <circle cx="51" cy="48" r="1.5" fill="white"/><circle cx="77" cy="48" r="1.5" fill="white"/>
+      <path d="M53 64C53 64 60 72 67 64" stroke="#3D3A36" stroke-width="3" stroke-linecap="round"/>
+      <path d="M60 57L52 62H68L60 57Z" fill="#D4A853"/>
+      <rect x="90" y="10" width="30" height="30" rx="8" fill="#FFF0EE" stroke="#E85D4C" stroke-width="3"/>
+      <path d="M98 23H112" stroke="#E85D4C" stroke-width="3" stroke-linecap="round"/>
+      <path d="M105 16V30" stroke="#E85D4C" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="cases-grid">
+    <!-- Flujo -->
+    <div class="case-card option-a">
+      <div class="case-header">
+        <span class="case-number">Flujo</span>
+        <span class="case-label">Implementación</span>
+      </div>
+
+      <div class="case-rule"><span>🎯</span> Define objetivo y unidad de decisión (mix, ventas, volumen)</div>
+      <div class="case-rule"><span>🧱</span> Preparación de datos</div>
+      <div class="case-rule"><span>🧠</span> Modelo se entrena y rankea según probabilidad</div>
+      <div class="case-rule"><span>🚀</span> Activa en canal con acción de ejecución clara</div>
+      <div class="case-rule"><span>🧪</span> Mide con experimento (acción vs control)</div>
+    </div>
+
+    <!-- Métricas -->
+    <div class="case-card option-b">
+      <div class="case-header">
+        <span class="case-number">Métricas</span>
+        <span class="case-label">Qué mirar</span>
+      </div>
+
+      <div class="case-detail">✅ <strong class="b">Adopción:</strong> % de clientes con recomendación aplicada (se compró/dio clic)</div>
+      <div class="case-detail">📦 <strong class="b">Cobertura:</strong> % clientes con recomendación válida</div>
+      <div class="case-detail">⚖️ <strong class="b">Impacto incremental:</strong> acción vs control (ventas/margen/mix)</div>
+      <div class="case-header">
+        <span class="case-number">Riesgos</span>
+        <span class="case-label">Qué mirar</span>
+      </div>
+    <div class="case-detail">🔁 <strong class="b">Canibalización:</strong> mover ventas dentro del portafolio sin ganar neto</div>
+    <div class="case-detail">🎁 <strong class="b">Efecto promo/retos:</strong> el “resultado” puede venir de campañas externas</div>
+    <div class="case-detail">💰 <strong class="b">Incentivos:</strong> si están desalineados, cae adopción</div>
+    </div>
+  </div>
+
+        <div class="example-insight">
+            <span>💡</span>
+            <div><strong>Insight:</strong> Un recomendador crea valor cuando se mide en el mundo real: adopción + uplift incremental. Si lo evalúas solo por “si gustó” o “si vendió hoy”, probablemente estés mirando una señal distinta (más de percepción o corto plazo) y no el impacto real.</div>
+        </div>
+    </div>
+    <!-- ╔═══════════════════════════════════════════════╗
+         ║  SECCIÓN 5: ERROR COMÚN                        ║
+         ║  🔄 Cambiar: título, lo que dicen vs realidad   ║
+         ║  🦉 Pixel: Confundido                           ║
+         ╚═══════════════════════════════════════════════╝ -->
+    <div class="error-section">
+        <div class="error-header">
+            <div class="error-icon">⚠️</div>
+            <!-- 🔄 CAMBIAR -->
+            <div class="error-title">Error común: Esperar perfección por cliente</div>
+            <!-- 🦉 PIXEL: Confundido -->
+            <svg width="38" height="44" viewBox="0 0 130 140" fill="none">
+                <ellipse cx="65" cy="95" rx="32" ry="27" fill="#E85D4C"/>
+                <ellipse cx="32" cy="72" rx="8" ry="14" fill="#C94A3A" transform="rotate(-40 32 72)"/>
+                <ellipse cx="35" cy="75" rx="5" ry="10" fill="#E85D4C" transform="rotate(-40 35 75)"/>
+                <ellipse cx="98" cy="72" rx="8" ry="14" fill="#C94A3A" transform="rotate(40 98 72)"/>
+                <ellipse cx="95" cy="75" rx="5" ry="10" fill="#E85D4C" transform="rotate(40 95 75)"/>
+                <ellipse cx="65" cy="100" rx="19" ry="16" fill="#FFF0EE"/>
+                <circle cx="55" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="65" cy="91" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="75" cy="95" r="3" fill="#E85D4C" fill-opacity="0.5"/>
+                <circle cx="65" cy="105" r="4" fill="#D4A853"/>
+                <ellipse cx="65" cy="50" rx="28" ry="24" fill="#E85D4C"/>
+                <path d="M40 35L36 22L50 33Z" fill="#C94A3A"/>
+                <path d="M90 35L94 22L80 33Z" fill="#C94A3A"/>
+                <circle cx="50" cy="48" r="10" fill="white"/><circle cx="80" cy="48" r="10" fill="white"/>
+                <circle cx="52" cy="46" r="4" fill="#3D3A36"/><circle cx="82" cy="52" r="4" fill="#3D3A36"/>
+                <circle cx="53" cy="44" r="1.5" fill="white"/><circle cx="83" cy="50" r="1.5" fill="white"/>
+                <path d="M55 67C58 64 72 67 75 64" stroke="#D4A853" stroke-width="2" stroke-linecap="round"/>
+                <path d="M65 57L62 64L65 62L68 64Z" fill="#D4A853"/>
+                <text x="95" y="30" fill="white" font-size="11" font-weight="bold">?</text>
+                <text x="25" y="35" fill="white" font-size="9" font-weight="bold">!</text>
+            </svg>
+        </div>
+        <div class="error-content">
+            <!-- 🔄 CAMBIAR -->
+            <div class="error-box wrong">
+                <div class="label">❌ Lo que se espera</div>
+                <p>"Recomendó X y no se vendió. <strong>Entonces el recomendador está mal.</strong>"</p>
+            </div>
+            <div class="error-box right">
+                <div class="label">✓ La realidad</div>
+                <p>Un recomendador no acierta siempre cliente por cliente; su valor se ve cuando, en conjunto, aumenta la <strong>adopción</strong>, <strong>uplift incremental</strong> y <strong>cumplimiento</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ╔═══════════════════════════════════════════════╗
+         ║  SECCIÓN 6: TAKEAWAY                           ║
+         ║  🔄 Cambiar: texto del takeaway                 ║
+         ║  🦉 Pixel: Eureka (dorado con foco)             ║
+         ╚═══════════════════════════════════════════════╝ -->
+
+    <div class="takeaway">
+        <!-- 🦉 PIXEL: Eureka dorado -->
+        <svg width="50" height="58" viewBox="0 0 130 150" fill="none">
+            <ellipse cx="65" cy="105" rx="32" ry="27" fill="#D4A853"/>
+            <ellipse cx="38" cy="100" rx="8" ry="14" fill="#C4983F" transform="rotate(-15 38 100)"/>
+            <ellipse cx="40" cy="98" rx="5" ry="10" fill="#D4A853" transform="rotate(-15 40 98)"/>
+            <ellipse cx="100" cy="78" rx="8" ry="16" fill="#C4983F" transform="rotate(50 100 78)"/>
+            <ellipse cx="97" cy="82" rx="5" ry="11" fill="#D4A853" transform="rotate(50 97 82)"/>
+            <ellipse cx="65" cy="110" rx="19" ry="16" fill="#FDF8EC"/>
+            <circle cx="55" cy="105" r="3" fill="#D4A853" fill-opacity="0.5"/>
+            <circle cx="65" cy="101" r="3" fill="#D4A853" fill-opacity="0.5"/>
+            <circle cx="75" cy="105" r="3" fill="#D4A853" fill-opacity="0.5"/>
+            <circle cx="65" cy="115" r="4" fill="#E85D4C"/>
+            <ellipse cx="65" cy="60" rx="28" ry="24" fill="#D4A853"/>
+            <path d="M42 45L38 32L52 43Z" fill="#C4983F"/>
+            <path d="M88 45L92 32L78 43Z" fill="#C4983F"/>
+            <circle cx="52" cy="58" r="10" fill="white"/><circle cx="78" cy="58" r="10" fill="white"/>
+            <circle cx="54" cy="60" r="5" fill="#D4A853"/><circle cx="80" cy="60" r="5" fill="#D4A853"/>
+            <circle cx="54" cy="60" r="2" fill="white"/><circle cx="80" cy="60" r="2" fill="white"/>
+            <path d="M55 74C55 74 65 84 75 74" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M65 67L62 74L65 72L68 74Z" fill="#C4983F"/>
+            <circle cx="65" cy="12" r="10" fill="white" fill-opacity="0.95"/>
+            <path d="M65 2V7M55 12H60M70 12H75M57 5L60 8M73 5L70 8" stroke="#D4A853" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div class="takeaway-text">
+            <strong>Takeaway:</strong> Un recomendador puede indicar la mejor próxima acción, pero el resultado lo define la ejecución: si no se aplica a tiempo o la herramienta frena el flujo, la oportunidad se diluye.
+        </div>
+    </div>
+
+
+    <!-- ╔═══════════════════════════════════════════════╗
+         ║  SECCIÓN 7: FOOTER — NO CAMBIAR                ║
+         ║  Solo cambiar los tags si aplica                 ║
+         ╚═══════════════════════════════════════════════╝ -->
+
+    <footer>
+        <div class="footer-logo">
+            <svg viewBox="0 0 40 40" fill="none">
+                <rect width="40" height="40" rx="10" fill="url(#fGrad)"/>
+                <circle cx="12" cy="15" r="3" fill="white"/>
+                <circle cx="12" cy="20" r="3" fill="white"/>
+                <circle cx="12" cy="25" r="3" fill="white"/>
+                <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+                <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+                <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+                <defs><linearGradient id="fGrad" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient></defs>
+            </svg>
+            <div class="footer-logo-text">
+                <span class="footer-name">Advanced Analytics</span>
+                <span class="footer-tagline">Data Science & ML</span>
+            </div>
+        </div>
+        <div class="footer-tags">
+            <!-- 🔄 CAMBIAR: tags relevantes -->
+            <span class="footer-tag">Recomendadores</span>
+            <span class="footer-tag">Playbook Vol. 3</span>
+        </div>
+    </footer>
+
+    </div><!-- /web-wrapper -->
+</body>
+</html>
